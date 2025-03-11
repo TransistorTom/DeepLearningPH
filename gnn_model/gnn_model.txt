@@ -1,1 +1,1 @@
-# To describe workings of different scripts/modules
+# Explanation of gnn_model scripts and modules
