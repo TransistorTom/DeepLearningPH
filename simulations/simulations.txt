@@ -1,1 +1,1 @@
-# to describe contents of simulations
+# Description of simulation modules and scripts
