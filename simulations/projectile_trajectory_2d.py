@@ -23,7 +23,7 @@ def projectile_trajectory_2d(theta, v0, m, dt, g = 9.81, x0 = 0, y0 = 0):
     vy0 = v0 * np.sin(theta_rad)
 
     # Time array
-    t_max = 2 * vy0 / g  # Total time of flight
+    t_max = (vy0 + np.sqrt(vy0**2+2*g*y0)) / g
     t = np.arange(0, t_max, dt)
 
     # Compute trajectory
