@@ -22,6 +22,6 @@ def free_fall_trajectory(m, dt, g = 9.81, y0 = 0):
     # Remove negative y values and make np array
     valid = y >= 0
     x, y, t = x[valid], y[valid], t[valid]
-    trajectory = np.column_stack((x,y,t))
+    trajectory = np.array([[[x[i],y[i]], t[i]] for i in range(len(t))], dtype=object)
 
     return trajectory
