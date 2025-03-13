@@ -33,6 +33,6 @@ def projectile_trajectory_2d(theta, v0, m, dt, g = 9.81, x0 = 0, y0 = 0):
     # Remove negative y values and make np array
     valid = y >= 0
     x, y, t = x[valid], y[valid], t[valid]
-    trajectory = np.column_stack((x,y,t))
+    trajectory = np.array([[[x[i], y[i]], t[i]] for i in range(len(t))], dtype=object)
 
     return trajectory
