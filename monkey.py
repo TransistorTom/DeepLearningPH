@@ -1,8 +1,9 @@
 class Monkey:
-    def __init__(self, name, age):
-        self.name = name  # Instance variable for monkey's name
-        self.age = age    # Instance variable for monkey's age
-
+    def __init__(self, name, age, tree):
+        self.name = name          # Instance variable for monkey's name
+        self.age = age            # Instance variable for monkey's age
+        self.favourite_tree= tree # Instance variable for monkey's favourite tree
+        
     def introduce(self):
         print(f"Hi, I'm {self.name}, I'm {self.age} years old, and I love {self.favorite_tree} trees!")
         
