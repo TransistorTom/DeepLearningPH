@@ -11,7 +11,7 @@ def free_fall_trajectory(m, dt, g = 9.81, y0 = 0):
     y0 (int or float): initial position (standard is 0) of object in m \\
 
         Returns: 
-    The output is a numpy array containing the (y,t) coordinates of the falling object
+    The output is a numpy array containing the [[y],t] coordinates of the falling object
     """
     t_max = np.sqrt(2 * y0 / g)
     t=np.arange(0, t_max, dt)
