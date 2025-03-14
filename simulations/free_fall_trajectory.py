@@ -41,7 +41,7 @@ def free_fall_trajectory(m, dt, y0, g = 9.81, N = 1, dim = 1):
     }
     
     trajectory_data["time"] = torch.tensor(t)
-    trajectory_data["positions"] = torch.tensor(trajectory[:, :-1].reashape(T, N, dim))
+    trajectory_data["positions"] = torch.tensor(trajectory[:, :-1].reshape(T, N, dim))
     trajectory_data["masses"] = torch.tensor(m)
 
     return trajectory_data
