@@ -22,6 +22,7 @@ def free_fall_trajectory(m, dt, y0, g = 9.81, N = 1, dim = 1):
             - "positions": A tensor of positions, with shape (T, N, dim), where T is the number of time steps.
             - "masses": A tensor representing the mass of the object (currently a scalar, repeated for N objects).
     """
+    
     t_max = np.sqrt(2 * y0 / g)
     t = np.arange(0, t_max, dt)
     T = len(t)
@@ -38,6 +39,7 @@ def free_fall_trajectory(m, dt, y0, g = 9.81, N = 1, dim = 1):
         "positions": torch.zeros((T, N, dim), dtype=torch.float32),
         "masses": None
     }
+    
     trajectory_data["time"] = torch.tensor(t)
     trajectory_data["positions"] = torch.tensor(trajectory[:, :-1].reashape(T, N, dim))
     trajectory_data["masses"] = torch.tensor(m)
