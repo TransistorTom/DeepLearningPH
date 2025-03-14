@@ -32,16 +32,20 @@ def free_fall_trajectory(m, dt, y0, g = 9.81, N = 1, dim = 1):
     # Remove negative y values and make np array
     valid = y >= 0
     y, t = y[valid], t[valid]
-    trajectory = np.column_stack((y,t))
+    trajectory = np.column_stack((y))
 
+    trajectory_velocities = - g * t
+    
     trajectory_data = {
         "time": torch.arange(T, dtype=torch.float32),
         "positions": torch.zeros((T, N, dim), dtype=torch.float32),
+        "velocities": torch.zeros((T, N, dim), dtype=torch.float32),
         "masses": torch.arange(N, dtype=torch.float32)
     }
     
     trajectory_data["time"] = torch.tensor(t)
-    trajectory_data["positions"] = torch.tensor(trajectory[:, :-1].reshape(T, N, dim))
+    trajectory_data["positions"] = torch.tensor(trajectory[:, :].reshape(T, N, dim))
+    trajectory_data["velocities"] = torch.tensor(trajectory_velocities[:, :].reshape(T, N, dim))
     trajectory_data["masses"] = torch.tensor(m)
 
     return trajectory_data
