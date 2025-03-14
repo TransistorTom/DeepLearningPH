@@ -37,7 +37,7 @@ def free_fall_trajectory(m, dt, y0, g = 9.81, N = 1, dim = 1):
     trajectory_data = {
         "time": torch.arange(T, dtype=torch.float32),
         "positions": torch.zeros((T, N, dim), dtype=torch.float32),
-        "masses": None
+        "masses": torch.arange(N, dtype=torch.float32)
     }
     
     trajectory_data["time"] = torch.tensor(t)
