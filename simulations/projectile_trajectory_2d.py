@@ -53,7 +53,7 @@ def projectile_trajectory_2d(m, dt, theta, v0, g = 9.81, x0 = 0, y0 = 0, N=1, di
     trajectory_data = {
         "time": torch.arange(T, dtype=torch.float32),
         "positions": torch.zeros((T, N, dim), dtype=torch.float32),
-        "masses": None
+        "masses": torch.arange(N, dtype=torch.float32)
     }
     
     # Convert time and positions into tensors
