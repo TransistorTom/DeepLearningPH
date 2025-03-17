@@ -27,21 +27,22 @@ def train_model(model, train_data, epochs=100, lr=0.01):
     model : torch.nn.Module
         The trained model.
     """
-    train_data = DataLoader(train_data, batch_size=1, shuffle=False)
+    
+    # Only convert to DataLoader if not already in DataLoader format
+    if isinstance(train_data, DataLoader):
+        train_data = DataLoader(train_data, batch_size=1, shuffle=False)
+
     optimizer = optim.Adam(model.parameters(), lr=lr)
     criterion = torch.nn.MSELoss()
     
     for epoch in range(epochs):
-        model.train()
+        total_loss = 0
         for data in train_data:
             optimizer.zero_grad()
             out = model(data.x, data.edge_index)
-            print(f"Model output shape: {out.shape}")
-            print(f"Target (data.y) shape: {data.y.shape}")
             loss = criterion(out, data.y)
             loss.backward()
             optimizer.step()
-        
-        print(f"Epoch {epoch + 1}, Loss: {loss.item()}")
+            total_loss += loss.item()
     
     return model

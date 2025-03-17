@@ -49,6 +49,7 @@ def node_data_list(trajectory_dict, self_loop=True, complete_graph=True):
     >>> print(graphs[0])
     Data(x=[5, 6], y=[5, 2], edge_index=[2, 25])
     """
+
     data_list = []
 
     N = trajectory_dict["masses"].numel()
@@ -75,9 +76,9 @@ def node_data_list(trajectory_dict, self_loop=True, complete_graph=True):
         ], dim=1)   # tensor of shape (N, 2 + 2 + 1 + 1) + (N, 6) if dim = 2
 
         velocity_update = trajectory_dict["velocities"][i+1] - trajectory_dict["velocities"][i]
-        acceleration = (1 / mass_data) * velocity_update / (trajectory_dict["time"][i+1] - trajectory_dict["time"][i])
+        acceleration = velocity_update / (trajectory_dict["time"][i+1] - trajectory_dict["time"][i])
 
-        y_target = torch.tensor(acceleration, dtype=torch.float)
+        y_target = torch.tensor(acceleration, dtype=torch.float32)
         
         edge_list = []
         
@@ -91,6 +92,6 @@ def node_data_list(trajectory_dict, self_loop=True, complete_graph=True):
                 
                 
 
-        data_list.append(Data(x=x_features, y=y_target, edge_index=edge_index))
+        data_list.append(Data(x=x_features.float(), y=y_target, edge_index=edge_index))
 
     return data_list

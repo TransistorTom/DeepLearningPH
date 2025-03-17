@@ -19,4 +19,4 @@ class Monkey:
 gibbon = Monkey("Gibby", 5, "banyan")
 lemur = Monkey("Momo", 3, "fig")
 panda = Monkey("Xi Lan", 12, "bamboo")
-human = Monkey("Ruxi", 26, "banana")
+human = Monkey("Ruxi", 26, "oak")
