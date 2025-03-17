@@ -75,7 +75,7 @@ def node_data_list(trajectory_dict, self_loop=True, complete_graph=True):
         ], dim=1)   # tensor of shape (N, 2 + 2 + 1 + 1) + (N, 6) if dim = 2
 
         velocity_update = trajectory_dict["velocities"][i+1] - trajectory_dict["velocities"][i]
-        acceleration = (1 / mass_data) * velocity_update / (trajectory_dict["time"][i+1] - trajectory_dict["time"][i])
+        acceleration = velocity_update / (trajectory_dict["time"][i+1] - trajectory_dict["time"][i])
 
         y_target = torch.tensor(acceleration, dtype=torch.float)
         
