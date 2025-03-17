@@ -16,7 +16,7 @@ class GNN_MLP(MessagePassing):
             nn.Linear(2 * in_channels, hidden_channels),
             nn.ReLU(),
             nn.Linear(hidden_channels, hidden_channels),
-            nn.ReLu(),
+            nn.ReLU(),
             nn.Linear(hidden_channels, out_channels)
         )
 
