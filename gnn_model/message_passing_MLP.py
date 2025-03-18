@@ -8,7 +8,7 @@ from torch_geometric.loader import DataLoader
 
 # define the message passing class to initiate MLP's among the nodes
 class GNN_MLP(MessagePassing):
-    def __init__(self, n_f, m_dim, hidden_channels, out_channels):
+    def __init__(self, n_f, m_dim, hidden_channels, out_channels, single_node = False):
         super(GNN_MLP, self).__init__(aggr='add')  # "Add" aggregation for summing over forces
         
         # initialising the MLP by creating the self.MLP attribute. 2 * in_channels to account for the fact that it may use both it's own and the other nodes features.
@@ -47,4 +47,5 @@ class GNN_MLP(MessagePassing):
         Updates node features with passed messages.
         """
         update_features = torch.cat([x, aggr_out], dim=1)
+        
         return self.agg_mlp(update_features)

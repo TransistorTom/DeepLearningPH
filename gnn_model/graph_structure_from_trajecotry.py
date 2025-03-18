@@ -87,10 +87,8 @@ def node_data_list(trajectory_dict, self_loop=True, complete_graph=True):
         
         if complete_graph:
             edge_list.extend([k,j] for k in range(N) for j in range(N) if k != j)           
-            
-        edge_index = torch.tensor(edge_list, dtype=torch.long).t().contiguous()
-                
-                
+   
+        edge_index = torch.tensor(edge_list, dtype=torch.long).t().contiguous()        
 
         data_list.append(Data(x=x_features.float(), y=y_target, edge_index=edge_index))
 
