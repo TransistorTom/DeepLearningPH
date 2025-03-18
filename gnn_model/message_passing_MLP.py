@@ -27,6 +27,7 @@ class GNN_MLP(MessagePassing):
             nn.ReLU(),
             nn.Linear(hidden_channels, out_channels)
         )
+        self.single_node = single_node
 
     def forward(self, x, edge_index):
         """
@@ -46,6 +47,9 @@ class GNN_MLP(MessagePassing):
         """
         Updates node features with passed messages.
         """
-        update_features = torch.cat([x, aggr_out], dim=1)
+        if self.single_node:
+            return aggr_out
         
-        return self.agg_mlp(update_features)
+        else:
+            update_features = torch.cat([x, aggr_out], dim=1)
+            return self.agg_mlp(update_features)
