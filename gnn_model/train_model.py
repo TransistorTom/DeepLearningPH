@@ -37,9 +37,10 @@ def train_model(model, train_data, epochs=100, lr=0.01):
     
     for epoch in range(epochs):
         total_loss = 0
+        final_epoch = (epoch == epochs - 1)
         for data in train_data:
             optimizer.zero_grad()
-            out = model(data.x, data.edge_index)
+            out = model(data.x, data.edge_index, final_epoch=final_epoch)
             loss = criterion(out, data.y)
             loss.backward()
             optimizer.step()
