@@ -28,20 +28,46 @@ class GNN_MLP(MessagePassing):
             nn.Linear(hidden_channels, out_channels)
         )
         self.single_node = single_node
+        self.message_storage = []
+        self.store_messages = False
+        self.current_time = None
+        self.current_mass = None
 
-    def forward(self, x, edge_index):
+    def forward(self, x, edge_index, final_epoch=False):
         """
         Forward calls propagate to initiate message passing for all nodes in edge_index
         """
-        x=x
-        return self.propagate(edge_index, size=(x.size(0), x.size(0)), x=x)  # Triggers message passing
+        self.store_messages = final_epoch
+        # Extract the time from the last column of x (assumes time is broadcasted to all nodes)
+        if final_epoch:
+            # self.current_time = round(x[0, -1].item(), 4) # Just take it from the first node
+            self.current_time = x[0, -1].item()
+
+        return self.propagate(edge_index, size=(x.size(0), x.size(0)), x=x)
     
-    def message(self, x_i, x_j):
-        """
-        Applying mlp to every directed edge in edge_index for [x_i, x_j]
-        """
-        edge_features = torch.cat([x_i, x_j], dim=1)  # Concatenating node features for edge
-        return self.mess_mlp(edge_features)  # Pass through MLP
+    def message(self, x_i, x_j, edge_index_i, edge_index_j):
+        edge_features = torch.cat([x_i, x_j], dim=1)
+        messages = self.mess_mlp(edge_features)
+
+        if self.store_messages:
+            for i in range(messages.size(0)):
+                difference = x_i[i, :2] - x_j[i, :2]
+                distance = torch.norm(difference, p=2)
+
+                record = {
+                    'edge': (edge_index_i[i].item(), edge_index_j[i].item()),
+                    'message': messages[i].detach().cpu().numpy(),
+                    'pos_i': x_i[i, :2].detach().cpu().numpy(),  # Extract position (assuming 2D)
+                    'pos_j': x_j[i, :2].detach().cpu().numpy(),
+                    'mass_i': x_i[0, -2].item(),  # Extract mass
+                    'mass_j': x_j[0, -2].item(),
+                    'distance': distance.item(),
+                    'time': self.current_time,
+                    
+                }
+                self.message_storage.append(record)
+
+        return messages
 
     def update(self, aggr_out, x=None):
         """
