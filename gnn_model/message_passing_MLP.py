@@ -27,19 +27,20 @@ class GNN_MLP(MessagePassing):
             nn.ReLU(),
             nn.Linear(hidden_channels, out_channels)
         )
+
         self.single_node = single_node
         self.message_storage = []
         self.store_messages = False
         self.current_time = None
         self.current_mass = None
 
-    def forward(self, x, edge_index, final_epoch=False):
+    def forward(self, x, edge_index, save_messages=False):
         """
         Forward calls propagate to initiate message passing for all nodes in edge_index
         """
-        self.store_messages = final_epoch
+        self.store_messages = save_messages
         # Extract the time from the last column of x (assumes time is broadcasted to all nodes)
-        if final_epoch:
+        if save_messages:
             # self.current_time = round(x[0, -1].item(), 4) # Just take it from the first node
             self.current_time = x[0, -1].item()
 
