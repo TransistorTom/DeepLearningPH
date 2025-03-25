@@ -13,7 +13,7 @@ class GNN_MLP(MessagePassing):
         
         # initialising the MLP by creating the self.MLP attribute. 2 * in_channels to account for the fact that it may use both it's own and the other nodes features.
         self.mess_mlp = nn.Sequential(
-            nn.Linear(2 * n_f, hidden_channels),
+            nn.Linear(4, hidden_channels),
             nn.ReLU(),
             nn.Linear(hidden_channels, hidden_channels),
             nn.ReLU(),
@@ -47,24 +47,31 @@ class GNN_MLP(MessagePassing):
         return self.propagate(edge_index, size=(x.size(0), x.size(0)), x=x)
     
     def message(self, x_i, x_j, edge_index_i, edge_index_j):
-        edge_features = torch.cat([x_i, x_j], dim=1)
+        
+        # Compute dx, dy (difference in positions)
+        dx = x_i[:, 0] - x_j[:, 0]
+        dy = x_i[:, 1] - x_j[:, 1]
+        r = torch.sqrt(dx**2 + dy**2)
+
+        # Extract mass of sender node j
+        m_j = x_j[:, -2]  # assuming mass is at position -2
+
+        # Stack the new edge features: [dx, dy, r, m_j]
+        edge_features = torch.stack([dx, dy, r, m_j], dim=1)
         messages = self.mess_mlp(edge_features)
 
         if self.store_messages:
             for i in range(messages.size(0)):
-                difference = x_i[i, :2] - x_j[i, :2]
-                distance = torch.norm(difference, p=2)
-
+                msg = messages[i].detach().cpu().numpy()
                 record = {
                     'edge': (edge_index_i[i].item(), edge_index_j[i].item()),
-                    'message': messages[i].detach().cpu().numpy(),
-                    'pos_i': x_i[i, :2].detach().cpu().numpy(),  # Extract position (assuming 2D)
-                    'pos_j': x_j[i, :2].detach().cpu().numpy(),
-                    'mass_i': x_i[i, -2].item(),  # Extract mass
-                    'mass_j': x_j[i, -2].item(),
-                    'distance': distance.item(),
-                    'time': self.current_time,
-                    
+                    'message_x': msg[0],
+                    'message_y': msg[1],
+                    'dx': dx[i].item(),
+                    'dy': dy[i].item(),
+                    'r': r[i].item(),
+                    'mass_j': m_j[i].item(),
+                    'time': self.current_time
                 }
                 self.message_storage.append(record)
 

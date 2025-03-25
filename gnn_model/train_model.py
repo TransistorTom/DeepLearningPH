@@ -33,7 +33,7 @@ def train_model(model, train_data, epochs=100, lr=0.01):
         train_data = DataLoader(train_data, batch_size=1, shuffle=False)
 
     optimizer = optim.Adam(model.parameters(), lr=lr)
-    criterion = torch.nn.MSELoss()
+    criterion = torch.nn.HuberLoss()
     
     for epoch in range(epochs):
         total_loss = 0

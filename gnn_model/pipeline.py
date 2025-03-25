@@ -5,6 +5,12 @@ from gnn_model.node_data_list import node_data_list
 from gnn_model.GNN_MLP import GNN_MLP
 from gnn_model.train_model import train_model
 
+def parity_flip_trajectory(traj):
+    flipped_positions = [-p for p in traj["positions"]]
+    flipped_velocities = [-v for v in traj["velocities"]]
+    
+    return {"time": traj["time"], "positions": flipped_positions, "velocities": flipped_velocities, "masses": traj["masses"].clone()}
+
 def pipeline(train_iterations=100, test_iterations=20,
                  N_train=2, N_test_list=[2, 3, 4, 5, 6], T=500, dt=0.01, dim=2, hidden_channels=128,
                  m_dim=2, out_channels=2, epochs=100, lr=0.001, save=False, model=None, training=True, testing=True, G=1.0, single_node=False):
@@ -42,11 +48,6 @@ def pipeline(train_iterations=100, test_iterations=20,
 
         # 6) Extract training messages
         train_messages = pd.DataFrame(model.message_storage)
-        train_messages[['pos_i_x', 'pos_i_y']] = pd.DataFrame(train_messages['pos_i'].tolist())
-        train_messages[['pos_j_x', 'pos_j_y']] = pd.DataFrame(train_messages['pos_j'].tolist())
-        train_messages[['message_x', 'message_y']] = pd.DataFrame(train_messages['message'].tolist())
-        train_messages = train_messages.drop(columns=['pos_i', 'pos_j', 'message', 'edge'])
-
 
     if testing:
 
@@ -60,6 +61,8 @@ def pipeline(train_iterations=100, test_iterations=20,
                 criterion = torch.nn.MSELoss()
                 total_loss = 0
                 test_trajectories = [n_body_simulation(N=N_test, T=T, dt=dt, dim=dim, box_size=30, min_dist=7) for _ in range(test_iterations)]
+                flipped_trajectories = [parity_flip_trajectory(traj) for traj in test_trajectories]
+                test_trajectories.extend(flipped_trajectories) 
                 test_graph_data = []
                 for traj in test_trajectories:
                     graphs = node_data_list(traj, self_loop=False, complete_graph=True)
@@ -77,10 +80,6 @@ def pipeline(train_iterations=100, test_iterations=20,
                 print(f"average loss per/over timestep N={N_test}:   {avg_loss}")
 
                 test_messages = pd.DataFrame(model.message_storage)
-                test_messages[['pos_i_x', 'pos_i_y']] = pd.DataFrame(test_messages['pos_i'].tolist())
-                test_messages[['pos_j_x', 'pos_j_y']] = pd.DataFrame(test_messages['pos_j'].tolist())
-                test_messages[['message_x', 'message_y']] = pd.DataFrame(test_messages['message'].tolist())
-                test_messages = test_messages.drop(columns=['pos_i', 'pos_j', 'message', 'edge'])
 
                 test_messages_all[N_test] = test_messages
 
