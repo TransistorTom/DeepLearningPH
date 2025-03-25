@@ -4,3 +4,6 @@ gnn_model/__pycache__/message_passing_MLP.cpython-39.pyc
 gnn_model/__pycache__/train_model.cpython-39.pyc
 simulations/__pycache__/__init__.cpython-39.pyc
 simulations/__pycache__/projectile_trajectory_2d.cpython-39.pyc
+simulations/__pycache__/n_body_trajectory.cpython-39.pyc
+gnn_model/__pycache__/train_model.cpython-39.pyc
+gnn_model/__pycache__/message_passing_MLP.cpython-39.pyc

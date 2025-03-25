@@ -9,17 +9,17 @@ def generate_random_positions(N, dim, min_dist, box_size):
             positions.append(pos)
     return torch.stack(positions)
 
-def generate_random_velocities(N, dim, velocity_scale=1.0):
+def generate_random_velocities(N, dim, velocity_scale):
     return (torch.rand((N, dim)) - 0.5) * 2 * velocity_scale
 
-def compute_gravitational_forces(positions, masses, G=1.0, eps=1e-5):
+def compute_gravitational_forces(positions, masses, G=0.05, eps=5e-3):
     N, dim = positions.shape
     forces = torch.zeros_like(positions)
     for i in range(N):
         for j in range(i + 1, N):
             r_vec = positions[j] - positions[i]
-            dist = torch.norm(r_vec) + eps
-            force_mag = G * masses[i] * masses[j] / dist**2
+            dist = torch.norm(r_vec)
+            force_mag = G * masses[i] * masses[j] / (dist**2 + eps)
             force_dir = r_vec / dist
             force = force_mag * force_dir
             forces[i] += force
