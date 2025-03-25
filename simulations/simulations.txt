@@ -1,0 +1,2 @@
+# free_fall_trajectory.py simulates the trajectory of a free fall of a body of mass m in 1 dimension and outputs a [[y],t] array for y position of height (y=0 is the ground) in meters and time in seconds.
+# projectile_trajectory_2d.py simulates the trajectory of a projectile travelling in two dimensions with initial velocity v0 and initial angle theta with the x-axis. Gravity is along the y-axis pointing in the negative direction. Positions in meters and time in seconds. Output is an np.array of the form [[x,y],t].
