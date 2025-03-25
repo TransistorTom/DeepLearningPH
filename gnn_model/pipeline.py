@@ -7,14 +7,14 @@ from gnn_model.train_model import train_model
 
 def pipeline(train_iterations=100, test_iterations=20,
                  N_train=2, N_test_list=[2, 3, 4, 5, 6], T=500, dt=0.01, dim=2, hidden_channels=128,
-                 m_dim=2, out_channels=2, epochs=100, lr=0.001, save=False, model=None, training=True, testing=True, G=0.5, single_node=False):
+                 m_dim=2, out_channels=2, epochs=100, lr=0.001, save=False, model=None, training=True, testing=True, G=1.0, single_node=False):
     
     train_messages=None
     test_messages_all=None
     
     if training:
         # 1) Run training simulations with N_train
-        train_trajectories = [n_body_simulation(N=N_train, T=T, dt=dt, dim=dim, box_size=10, min_dist=2.5, G=0.5) for _ in range(train_iterations)]
+        train_trajectories = [n_body_simulation(N=N_train, T=T, dt=dt, dim=dim, box_size=10, min_dist=2.5, G=1.0) for _ in range(train_iterations)]
     
         train_graph_data = []
         for traj in train_trajectories:
