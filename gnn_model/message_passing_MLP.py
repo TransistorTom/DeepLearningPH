@@ -60,8 +60,8 @@ class GNN_MLP(MessagePassing):
                     'message': messages[i].detach().cpu().numpy(),
                     'pos_i': x_i[i, :2].detach().cpu().numpy(),  # Extract position (assuming 2D)
                     'pos_j': x_j[i, :2].detach().cpu().numpy(),
-                    'mass_i': x_i[0, -2].item(),  # Extract mass
-                    'mass_j': x_j[0, -2].item(),
+                    'mass_i': x_i[i, -2].item(),  # Extract mass
+                    'mass_j': x_j[i, -2].item(),
                     'distance': distance.item(),
                     'time': self.current_time,
                     
