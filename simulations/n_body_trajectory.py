@@ -12,6 +12,15 @@ def generate_random_positions(N, dim, min_dist, box_size):
 def generate_random_velocities(N, dim, velocity_scale):
     return (torch.rand((N, dim)) - 0.5) * 2 * velocity_scale
 
+def generate_unique_masses(N, mass_range, resolution=25):
+
+    # Create a fine grid in the range
+    mass_grid = torch.linspace(mass_range[0], mass_range[1], resolution).tolist()
+    # Randomly choose N unique masses
+    unique_masses = random.sample(mass_grid, N)
+
+    return torch.tensor(unique_masses, dtype=torch.float32)
+
 def compute_gravitational_forces(positions, masses, G=0.05, eps=5e-3):
     N, dim = positions.shape
     forces = torch.zeros_like(positions)
@@ -30,7 +39,7 @@ def n_body_simulation(N=5, T=100, dt=0.01, dim=2,
                       mass_range=(1.0, 10.0), min_dist=0.5,
                       box_size=10.0, velocity_scale=1.0):
     # Initialize
-    masses = torch.tensor([random.uniform(*mass_range) for _ in range(N)], dtype=torch.float32)
+    masses = generate_unique_masses(N, mass_range)
     positions = generate_random_positions(N, dim, min_dist, box_size)
     velocities = generate_random_velocities(N, dim, velocity_scale)
 
