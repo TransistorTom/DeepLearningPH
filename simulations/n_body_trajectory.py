@@ -21,7 +21,7 @@ def generate_unique_masses(N, mass_range, resolution=25):
 
     return torch.tensor(unique_masses, dtype=torch.float32)
 
-def compute_gravitational_forces(positions, masses, G=0.05, eps=5e-3):
+def compute_gravitational_forces(positions, masses, G=1.0, eps=5e-3):
     N, dim = positions.shape
     forces = torch.zeros_like(positions)
     for i in range(N):
@@ -37,7 +37,7 @@ def compute_gravitational_forces(positions, masses, G=0.05, eps=5e-3):
 
 def n_body_simulation(N=5, T=100, dt=0.01, dim=2,
                       mass_range=(1.0, 10.0), min_dist=0.5,
-                      box_size=10.0, velocity_scale=1.0):
+                      box_size=10.0, velocity_scale=1.0, G=1.0):
     # Initialize
     masses = generate_unique_masses(N, mass_range)
     positions = generate_random_positions(N, dim, min_dist, box_size)
@@ -53,7 +53,7 @@ def n_body_simulation(N=5, T=100, dt=0.01, dim=2,
         trajectory_velocities[t] = velocities
 
         # Compute forces and update positions & velocities (Euler method)
-        forces = compute_gravitational_forces(positions, masses)
+        forces = compute_gravitational_forces(positions, masses, G=1.0)
         accelerations = forces / masses[:, None]
         velocities = velocities + accelerations * dt
         positions = positions + velocities * dt

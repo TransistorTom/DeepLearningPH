@@ -38,6 +38,7 @@ def train_model(model, train_data, epochs=100, lr=0.01):
     for epoch in range(epochs):
         total_loss = 0
         final_epoch = (epoch == epochs - 1)
+        relative_errors = []
         for data in train_data:
             optimizer.zero_grad()
             out = model(data.x, data.edge_index, save_messages=final_epoch) #no longer needed per se, decided to 
@@ -45,5 +46,19 @@ def train_model(model, train_data, epochs=100, lr=0.01):
             loss.backward()
             optimizer.step()
             total_loss += loss.item()
+
+            eps = 1e-8  # to avoid division by zero
+            rel_err = torch.abs(out - data.y) / (torch.abs(data.y) + eps)
+            mean_rel_err = rel_err.mean().item()
+            relative_errors.append(mean_rel_err)
+            # relative_errors.append(relative_error.item())
+        
+        avg_loss = total_loss / len(train_data)
+        avg_rel_err = np.mean(relative_errors)
+
+
+        print(f"Epoch {epoch+1:03}: MSE = {avg_loss:.6f}, Mean Relative Error = {avg_rel_err:.6f}")
+
+
     
     return model
