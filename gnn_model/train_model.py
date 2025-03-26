@@ -4,6 +4,16 @@ import torch.optim as optim
 import torch_geometric
 from torch_geometric.data import Data
 from torch_geometric.loader import DataLoader
+import torch.nn as nn
+
+class RelativeL1Loss(nn.Module):
+    def __init__(self, eps=1e-8):
+        super().__init__()
+        self.eps = eps
+
+    def forward(self, pred, target):
+        rel_error = torch.abs(pred - target) / (torch.abs(target) + self.eps)
+        return rel_error.mean()
 
 def train_model(model, train_data, epochs=100, lr=0.01):
     """
@@ -33,7 +43,7 @@ def train_model(model, train_data, epochs=100, lr=0.01):
         train_data = DataLoader(train_data, batch_size=1, shuffle=False)
 
     optimizer = optim.Adam(model.parameters(), lr=lr)
-    criterion = torch.nn.HuberLoss()
+    criterion = RelativeL1Loss()
     
     for epoch in range(epochs):
         total_loss = 0
