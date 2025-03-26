@@ -17,6 +17,8 @@ class GNN_MLP(MessagePassing):
             nn.ReLU(),
             nn.Linear(hidden_channels, hidden_channels),
             nn.ReLU(),
+            nn.Linear(hidden_channels,hidden_channels),
+            nn.ReLU(),
             nn.Linear(hidden_channels, m_dim)
         )
 
