@@ -36,7 +36,7 @@ def compute_gravitational_forces(positions, masses, G=1.0, eps=5e-3):
     return forces
 
 def n_body_simulation(N=5, T=100, dt=0.01, dim=2,
-                      mass_range=(1.0, 10.0), min_dist=0.5,
+                      mass_range=(1.0, 7.0), min_dist=0.5,
                       box_size=10.0, velocity_scale=1.0, G=1.0):
     # Initialize
     masses = generate_unique_masses(N, mass_range)
