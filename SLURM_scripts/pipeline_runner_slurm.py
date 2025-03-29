@@ -53,4 +53,4 @@ if __name__ == "__main__":
     history_loss_df = pd.DataFrame(history_loss)
     history_loss_df.to_csv(f"{results_dir}/history_loss.csv")
 
-    torch.save(model.state_dict(), f"{results_dir}/model-dim:{dim}-job:{job_id}-N:{N_train}-.pt")
+    torch.save(model.state_dict(), f"{results_dir}/model-dim:{dim}-job:{job_id}-N:{N}-.pt")
