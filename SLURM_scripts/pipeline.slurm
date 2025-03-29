@@ -12,7 +12,7 @@
 #SBATCH --mail-user=j.toot@student.rug.nl 
 
 module load Python/3.9.5-GCCcore-10.3.0
-module load cuda
+module load CUDA
 
 source ~/envs/DLP/bin/activate
 
