@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=train_model
-#SBATCH --output=dlp/results/results_%j.txt      
-#SBATCH --error=dlp/results/error_%j.txt         
+#SBATCH --output=/home2/github/DeepLearningPH/results/results_%j.txt      
+#SBATCH --error=/home2/github/DeepLearningPH/results/error_%j.txt         
 #SBATCH --ntasks=1                         
 #SBATCH --cpus-per-task=4                 
 #SBATCH --mem=4G                           
