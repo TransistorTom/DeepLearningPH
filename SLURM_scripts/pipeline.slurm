@@ -6,7 +6,7 @@
 #SBATCH --cpus-per-task=4                 
 #SBATCH --mem=4G                           
 #SBATCH --time=01:00:00                    
-#SBATCH --partition=short                  
+#SBATCH --partition=regularshort                  
 #SBATCH --mail-type=END,FAIL              
 #SBATCH --mail-user=j.toot@student.rug.nl 
 
