@@ -14,19 +14,19 @@ class GNN_MLP(MessagePassing):
         # initialising the MLP by creating the self.MLP attribute. 2 * in_channels to account for the fact that it may use both it's own and the other nodes features.
         self.mess_mlp = nn.Sequential(
             nn.Linear(4, hidden_channels),
-            nn.ReLU(),
+            nn.LeakyReLU(),
             nn.Linear(hidden_channels, hidden_channels),
-            nn.ReLU(),
+            nn.LeakyReLU(),
             nn.Linear(hidden_channels,hidden_channels),
-            nn.ReLU(),
+            nn.LeakyReLU(),
             nn.Linear(hidden_channels, m_dim)
         )
 
         self.agg_mlp = nn.Sequential(
             nn.Linear(m_dim + n_f, hidden_channels),
-            nn.ReLU(),
+            nn.LeakyReLU(),
             nn.Linear(hidden_channels, hidden_channels),
-            nn.ReLU(),
+            nn.LeakyReLU(),
             nn.Linear(hidden_channels, out_channels)
         )
 

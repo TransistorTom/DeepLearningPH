@@ -17,12 +17,12 @@ if __name__ == "__main__":
 
     # Running full model for training
     model, train_df, test_dfs = pipeline(
-        train_iterations=10,
-        test_iterations=2,
+        train_iterations=1000,
+        test_iterations=20,
         N_train=3,
         N_test_list=[3, 4, 5],
-        T=100,
-        dt=0.01,
+        T=1000,
+        dt=0.001,
         dim=dim,
         hidden_channels=128,
         m_dim=2,
