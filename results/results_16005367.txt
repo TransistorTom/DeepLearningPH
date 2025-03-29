@@ -1,0 +1,43 @@
+Running on v100v2gpu13
+Python path: /home2/s3306801/envs/DLP/bin/python
+
+###############################################################################
+Hábrók Cluster
+Job 16005367 for user s3306801
+Finished at: Sat Mar 29 20:43:06 CET 2025
+
+Job details:
+============
+
+Job ID                         : 16005367
+Name                           : train_model
+User                           : s3306801
+Partition                      : gpushort
+Nodes                          : v100v2gpu13
+Number of Nodes                : 1
+Cores                          : 4
+Number of Tasks                : 1
+State                          : FAILED  
+Submit                         : 2025-03-29T20:42:53
+Start                          : 2025-03-29T20:42:54
+End                            : 2025-03-29T20:43:02
+Reserved walltime              : 01:00:00
+Used walltime                  : 00:00:08
+Used CPU time                  : 00:00:04 (Efficiency: 12.70%)
+% User (Computation)           : 76.28%
+% System (I/O)                 : 23.70%
+Total memory reserved          : 4G
+Maximum memory used            : 12.51M
+Requested GPUs                 : 1
+Allocated GPUs                 : v100=1
+Max GPU utilization            : 0%
+Max GPU memory used            : 0.00 
+
+Acknowledgements:
+=================
+
+Please see this page for information about acknowledging Hábrók in your publications:
+
+https://wiki.hpc.rug.nl/habrok/introduction/scientific_output
+
+################################################################################

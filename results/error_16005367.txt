@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/home2/s3306801/github/DeepLearningPH/SLURM_scripts/pipeline_runner_slurm.py", line 5, in <module>
+    from functions.n_body_simulation import n_body_simulation, generate_random_positions, generate_random_velocities, generate_unique_masses
+ModuleNotFoundError: No module named 'functions'
