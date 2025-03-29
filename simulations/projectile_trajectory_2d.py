@@ -14,7 +14,7 @@ def projectile_trajectory_2d(m, dt, theta, v0, g = 9.81, x0 = 0, y0 = 0, N=1, di
     x0, y0 (int or float): initial position of ball in m \\
 
         Returns: 
-    The output is a numpy array containing the (x,y,t) coordinates of the projectile
+    The output is a dictionary containing the {time, positions, velocities, masses} coordinates of the projectile
     """
 
     # Convert theta to radians
