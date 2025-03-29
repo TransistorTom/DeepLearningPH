@@ -78,7 +78,7 @@ def node_data_list(trajectory_dict, self_loop=True, complete_graph=True):
         velocity_update = trajectory_dict["velocities"][i+1] - trajectory_dict["velocities"][i]
         acceleration = velocity_update / (trajectory_dict["time"][i+1] - trajectory_dict["time"][i])
 
-        y_target = torch.tensor(acceleration, dtype=torch.float32)
+        y_target = acceleration.float()
         
         edge_list = []
         

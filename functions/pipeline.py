@@ -64,15 +64,17 @@ def pipeline(train_iterations=100, test_iterations=20,
                 criterion = torch.nn.MSELoss()
                 total_loss = 0
                 test_trajectories = [n_body_simulation(N=N_test, T=T, dt=dt, dim=dim, box_size=30, min_dist=7) for _ in range(test_iterations)]
+                test_trajectories = test_trajectories.to(device)
                 flipped_trajectories = [parity_flip_trajectory(traj) for traj in test_trajectories]
                 test_trajectories.extend(flipped_trajectories) 
+                test_trajectories = test_trajectories.to(device)
                 test_graph_data = []
                 for traj in test_trajectories:
                     graphs = node_data_list(traj, self_loop=False, complete_graph=True)
                     test_graph_data.extend(graphs)
 
                 model.message_storage = []
-
+                model = model.to(device)
                 for data in test_graph_data:
                     out = model(data.x, data.edge_index, save_messages=True)
                     loss = criterion(out, data.y)
