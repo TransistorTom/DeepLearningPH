@@ -1,0 +1,5 @@
+/var/spool/slurmd/job16005345/slurm_script: line 25: -v: command not found
+
+real	0m0.006s
+user	0m0.001s
+sys	0m0.000s
