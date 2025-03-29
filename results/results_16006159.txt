@@ -1,0 +1,2 @@
+Running on v100v2gpu13
+Python path: /home2/s3306801/envs/DLP/bin/python
