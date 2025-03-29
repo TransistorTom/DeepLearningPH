@@ -6,6 +6,9 @@ from torch_geometric.data import Data
 from torch_geometric.loader import DataLoader
 import torch.nn as nn
 
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+
 class RelativeL1Loss(nn.Module):
     def __init__(self, eps=1e-8):
         super().__init__()
@@ -45,30 +48,28 @@ def train_model(model, train_data, epochs=100, lr=0.01):
     optimizer = optim.Adam(model.parameters(), lr=lr)
     criterion = RelativeL1Loss()
     
+    loss_history = {"Epoch": [], "L1R": []}
+
     for epoch in range(epochs):
         total_loss = 0
         final_epoch = (epoch == epochs - 1)
         relative_errors = []
         for data in train_data:
+            data = data.to(device)
             optimizer.zero_grad()
             out = model(data.x, data.edge_index, save_messages=final_epoch) #no longer needed per se, decided to 
             loss = criterion(out, data.y)
             loss.backward()
             optimizer.step()
-            total_loss += loss.item()
+            total_loss += loss.item() * (1 / (data.x.shape[0]-1))
 
-            eps = 1e-8  # to avoid division by zero
-            rel_err = torch.abs(out - data.y) / (torch.abs(data.y) + eps)
-            mean_rel_err = rel_err.mean().item()
-            relative_errors.append(mean_rel_err)
-            # relative_errors.append(relative_error.item())
+        loss_e = total_loss / len(train_data) # gives average L1R loss per application of the message function    
+
+        loss_history["Epoch"].append(epoch + 1)
+        loss_history["L1R"].append(loss_e)
         
-        avg_loss = total_loss / len(train_data)
-        avg_rel_err = np.mean(relative_errors)
-
-
-        print(f"Epoch {epoch+1:03}: MSE = {avg_loss:.6f}, Mean Relative Error = {avg_rel_err:.6f}")
+        print(f"Epoch {epoch+1:03}: MSE = {loss_e:.6f}")
 
 
     
-    return model
+    return model, loss_history

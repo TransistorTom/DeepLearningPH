@@ -1,9 +1,11 @@
 import pandas as pd
 import torch
-from simulations.n_body_trajectory import n_body_simulation, generate_random_positions, generate_random_velocities, generate_unique_masses
-from gnn_model.node_data_list import node_data_list 
-from gnn_model.GNN_MLP import GNN_MLP
-from gnn_model.train_model import train_model
+from functions.n_body_simulation import n_body_simulation, generate_random_positions, generate_random_velocities, generate_unique_masses
+from functions.node_data_list import node_data_list 
+from functions.GNN_MLP import GNN_MLP
+from functions.train_model import train_model
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 def parity_flip_trajectory(traj):
     flipped_positions = [-p for p in traj["positions"]]
@@ -34,7 +36,7 @@ def pipeline(train_iterations=100, test_iterations=20,
         input_dim = train_graph_data[0].x.shape[1]
         if model is None:
             model = GNN_MLP(n_f=input_dim, m_dim=m_dim, hidden_channels=hidden_channels,
-                        out_channels=out_channels, single_node=False)
+                        out_channels=out_channels, single_node=False).to(device)
 
         # 5) Train model
         model = train_model(model, train_data, epochs=epochs, lr=lr)
