@@ -8,12 +8,15 @@ from functions.train_model import train_model
 from your_module import pipeline  # or if pipeline is in this same file, you don’t need this line
 
 if __name__ == "__main__":
-    results_dir = "/home2/s3306801/dlp/results"
-    os.makedirs(results_dir, exist_ok=True)
-    
+
+    # Creating folders for results on habrok
+    repo_dir = os.path.dirname(os.path.abspath(__file__))
     job_id = os.environ.get("SLURM_JOB_ID", "nojob")
-    dim = 2
-    
+    timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    results_dir = os.path.join(repo_dir, f"results/job{job_id}_{timestamp}")
+    os.makedirs(results_dir, exist_ok=True)
+
+    # Running full model for training
     model, train_df, test_dfs = pipeline(
         train_iterations=10,
         test_iterations=2,
@@ -31,7 +34,8 @@ if __name__ == "__main__":
         training=True,
         testing=True
     )
-
+    
+    
     # Save results to /dlp/results
     train_df.to_csv(f"{results_dir}/train_messages.csv")
     for N, df in test_dfs.items():
