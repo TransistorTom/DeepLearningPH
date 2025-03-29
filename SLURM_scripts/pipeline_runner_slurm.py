@@ -7,6 +7,7 @@ from functions.node_data_list import node_data_list
 from functions.GNN_MLP import GNN_MLP
 from functions.train_model import train_model
 from functions.pipeline import pipeline
+import datetime
 
 repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 if repo_root not in sys.path:
