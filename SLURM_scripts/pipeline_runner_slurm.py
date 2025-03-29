@@ -1,4 +1,5 @@
 import os
+import sys
 import torch
 import pandas as pd
 from functions.n_body_simulation import n_body_simulation, generate_random_positions, generate_random_velocities, generate_unique_masses
@@ -6,6 +7,11 @@ from functions.node_data_list import node_data_list
 from functions.GNN_MLP import GNN_MLP
 from functions.train_model import train_model
 from functions.pipeline import pipeline
+
+repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+if repo_root not in sys.path:
+    sys.path.insert(0, repo_root)
+
 
 if __name__ == "__main__":
     # Creating folders for results on habrok
@@ -23,7 +29,7 @@ if __name__ == "__main__":
         N_test_list=[3, 4, 5],
         T=1000,
         dt=0.001,
-        dim=dim,
+        dim=2,
         hidden_channels=128,
         m_dim=2,
         out_channels=2,
