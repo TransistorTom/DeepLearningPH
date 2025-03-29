@@ -93,6 +93,6 @@ def node_data_list(trajectory_dict, self_loop=True, complete_graph=True):
         edge_index = torch.tensor(edge_list, dtype=torch.long).t().contiguous()        
         data = Data(x=x_features.float(), y=y_target, edge_index=edge_index)
         data = data.to(device)
-        data_list.append(Data(x=x_features.float(), y=y_target, edge_index=edge_index))
+        data_list.append(data)
 
     return data_list
