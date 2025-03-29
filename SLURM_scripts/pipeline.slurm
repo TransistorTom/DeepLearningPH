@@ -10,4 +10,14 @@
 #SBATCH --mail-type=END,FAIL              
 #SBATCH --mail-user=j.toot@student.rug.nl 
 
+module load Python/3.9.5-GCCcore-10.3.0
+
 source ~/envs/DLP/bin/activate
+
+echo "Running on $(hostname)"
+echo "Python path: $(which python)"
+
+nvidia-smi --query-gpu=timestamp,utilization.gpu,utilization.memory,memory.used --format=csv -l 5 > gpu_usage.log &
+trap "kill $!" EXIT
+
+/usr/bin/time -v python ~/DeepLearningPH/pipeline_runner_slurm.py
