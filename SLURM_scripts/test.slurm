@@ -13,7 +13,7 @@
 
 echo "Job started on $(hostname) at $(date)"
 echo "Current working directory: $(pwd)"
-env > /home2/github/DeepLearningPH/results/env_$SLURM_JOB_ID.txt
+env > /home2/s3306801/github/DeepLearningPH/results/env_$SLURM_JOB_ID.txt
 
 module load Python/3.9.5-GCCcore-10.3.0
 module load CUDA
