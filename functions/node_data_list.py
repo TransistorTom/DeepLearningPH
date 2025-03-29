@@ -1,6 +1,8 @@
 import torch
 from torch_geometric.data import Data
 
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
 def node_data_list(trajectory_dict, self_loop=True, complete_graph=True):
     """
     Converts a trajectory dictionary into a list of PyTorch Geometric `Data` objects 
@@ -89,7 +91,8 @@ def node_data_list(trajectory_dict, self_loop=True, complete_graph=True):
             edge_list.extend([k,j] for k in range(N) for j in range(N) if k != j)           
    
         edge_index = torch.tensor(edge_list, dtype=torch.long).t().contiguous()        
-
+        data = Data(x=x_features.float(), y=y_target, edge_index=edge_index)
+        data = data.to(device)
         data_list.append(Data(x=x_features.float(), y=y_target, edge_index=edge_index))
 
     return data_list
