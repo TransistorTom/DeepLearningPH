@@ -77,7 +77,7 @@ def pipeline(train_iterations=100, test_iterations=20,
                     out = model(data.x, data.edge_index, save_messages=True)
                     loss = criterion(out, data.y)
                     total_loss +=loss.item()
-                    
+
                 print(len(test_graph_data))    
 
                 avg_loss = total_loss/len(test_graph_data)    

@@ -25,12 +25,12 @@ if __name__ == "__main__":
     dim = 2
     N = 3
     # Running full model for training
-    model, train_df, test_dfs = pipeline(
-        train_iterations=250,
+    model, train_df, test_dfs, history_loss = pipeline(
+        train_iterations=100,
         test_iterations=20,
         N_train=N,
         N_test_list=[3, 4, 5],
-        T=250,
+        T=100,
         dt=0.001,
         dim=dim,
         hidden_channels=128,
@@ -46,7 +46,11 @@ if __name__ == "__main__":
     
     # Save results to /dlp/results
     train_df.to_csv(f"{results_dir}/train_messages.csv")
+
     for N, df in test_dfs.items():
         df.to_csv(f"{results_dir}/test_messages_N{N}.csv")
+
+    history_loss_df = pd.DataFrame(history_loss)
+    history_loss_df.to_csv(f"{results_dir}/history_loss.csv")
 
     torch.save(model.state_dict(), f"{results_dir}/model-dim:{dim}-job:{job_id}-N:{N_train}-.pt")
