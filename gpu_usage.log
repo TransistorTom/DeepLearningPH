@@ -1,0 +1,2 @@
+timestamp, utilization.gpu [%], utilization.memory [%], memory.used [MiB]
+2025/03/29 20:39:01.265, 0 %, 0 %, 1 MiB
