@@ -2,11 +2,10 @@
 #SBATCH --job-name=train_model
 #SBATCH --output=/home2/github/DeepLearningPH/results/results_%j.txt      
 #SBATCH --error=/home2/github/DeepLearningPH/results/error_%j.txt         
-#SBATCH --ntasks=1                         
-#SBATCH --cpus-per-task=4                 
+#SBATCH --ntasks=1                            
+#SBATCH --gpus-per-task=1              
 #SBATCH --mem=4G                           
-#SBATCH --time=01:00:00                    
-#SBATCH --partition=regularshort                  
+#SBATCH --time=01:00:00                                 
 #SBATCH --mail-type=END,FAIL              
 #SBATCH --mail-user=j.toot@student.rug.nl 
 
@@ -20,4 +19,4 @@ echo "Python path: $(which python)"
 nvidia-smi --query-gpu=timestamp,utilization.gpu,utilization.memory,memory.used --format=csv -l 5 > gpu_usage.log &
 trap "kill $!" EXIT
 
-/usr/bin/time -v python ~/DeepLearningPH/pipeline_runner_slurm.py
+time -v python ~/DeepLearningPH/pipeline_runner_slurm.py
