@@ -3,7 +3,8 @@
 #SBATCH --output=/home2/github/DeepLearningPH/results/results_%j.txt      
 #SBATCH --error=/home2/github/DeepLearningPH/results/error_%j.txt         
 #SBATCH --ntasks=1
-#SBATCH --gpus-per-task=1  
+#SBATCH --cpus-per-task=4
+#SBATCH --gres=gpu:1
 #SBATCH --partition=gpushort                                      
 #SBATCH --mem=4G                           
 #SBATCH --time=01:00:00                                 
@@ -11,6 +12,7 @@
 #SBATCH --mail-user=j.toot@student.rug.nl 
 
 module load Python/3.9.5-GCCcore-10.3.0
+module load cuda
 
 source ~/envs/DLP/bin/activate
 
