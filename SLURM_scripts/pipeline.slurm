@@ -22,4 +22,4 @@ echo "Python path: $(which python)"
 nvidia-smi --query-gpu=timestamp,utilization.gpu,utilization.memory,memory.used --format=csv -l 5 > gpu_usage.log &
 trap "kill $!" EXIT
 
-time -v python /home2/s3306801/github/DeepLearningPH/SLURM_scripts/pipeline_runner_slurm.py
+python /home2/s3306801/github/DeepLearningPH/SLURM_scripts/pipeline_runner_slurm.py
