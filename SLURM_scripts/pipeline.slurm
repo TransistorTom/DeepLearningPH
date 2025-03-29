@@ -1,11 +1,23 @@
 #!/bin/bash
 #SBATCH --job-name=train_model
-#SBATCH --output=dlp/results/results_%j.txt       # Save output in logs dir
-#SBATCH --error=dlp/results/error_%j.txt         # Save error output
-#SBATCH --ntasks=1                         # Number of tasks (1 = serial job)
-#SBATCH --cpus-per-task=4                 # Adjust for your script
-#SBATCH --mem=4G                           # Memory per node
-#SBATCH --time=01:00:00                    # Time limit (HH:MM:SS)
-#SBATCH --partition=short                  # Partition name (e.g., short, long)
-#SBATCH --mail-type=END,FAIL              # Get email when job ends or fails
-#SBATCH --mail-user=j.toot@student.rug.nl # Your email
+#SBATCH --output=dlp/results/results_%j.txt      
+#SBATCH --error=dlp/results/error_%j.txt         
+#SBATCH --ntasks=1                         
+#SBATCH --cpus-per-task=4                 
+#SBATCH --mem=4G                           
+#SBATCH --time=01:00:00                    
+#SBATCH --partition=short                  
+#SBATCH --mail-type=END,FAIL              
+#SBATCH --mail-user=j.toot@student.rug.nl 
+
+module load Python/3.9.5-GCCcore-10.3.0
+
+source ~/envs/DLP/bin/activate
+
+echo "Running on $(hostname)"
+echo "Python path: $(which python)"
+
+nvidia-smi --query-gpu=timestamp,utilization.gpu,utilization.memory,memory.used --format=csv -l 5 > gpu_usage.log &
+trap "kill $!" EXIT
+
+/usr/bin/time -v python ~/DeepLearningPH/pipeline_runner_slurm.py

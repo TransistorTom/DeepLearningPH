@@ -5,10 +5,9 @@ from functions.n_body_simulation import n_body_simulation, generate_random_posit
 from functions.node_data_list import node_data_list 
 from functions.GNN_MLP import GNN_MLP
 from functions.train_model import train_model
-from your_module import pipeline  # or if pipeline is in this same file, you don’t need this line
+from functions.pipeline import pipeline
 
 if __name__ == "__main__":
-
     # Creating folders for results on habrok
     repo_dir = os.path.dirname(os.path.abspath(__file__))
     job_id = os.environ.get("SLURM_JOB_ID", "nojob")
