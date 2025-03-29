@@ -9,14 +9,21 @@ from functions.train_model import train_model
 from functions.pipeline import pipeline
 import datetime
 
-repo_root = os.getwcd()
+try:
+    repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+except NameError:
+    repo_dir = os.getcwd()
 if repo_root not in sys.path:
     sys.path.insert(0, repo_root)
 
 
 if __name__ == "__main__":
     # Creating folders for results on habrok
-    repo_dir = os.getwcd()
+    try:
+        repo_dir = os.path.dirname(os.path.abspath(__file__))
+    except NameError:
+        repo_dir = os.getcwd()
+        
     job_id = os.environ.get("SLURM_JOB_ID", "nojob")
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     results_dir = os.path.join(repo_dir, f"results/job{job_id}_{timestamp}")
@@ -26,8 +33,8 @@ if __name__ == "__main__":
     N = 3
     # Running full model for training
     model, train_df, test_dfs, history_loss = pipeline(
-        train_iterations=10,
-        test_iterations=2,
+        train_iterations=100,
+        test_iterations=20,
         N_train=N,
         N_test_list=[3, 4, 5],
         T=100,
