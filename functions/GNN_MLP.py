@@ -63,6 +63,7 @@ class GNN_MLP(MessagePassing):
         # Stack the new edge features: [dx, dy, r, m_j]
         edge_features = torch.stack([dx, dy, r, m_j], dim=1)
         edge_features = edge_features.to(device)
+        print(f"x_i device: {x_i.device}, edge_features device: {edge_features.device}")
         messages = self.mess_mlp(edge_features)
 
         if self.store_messages:
