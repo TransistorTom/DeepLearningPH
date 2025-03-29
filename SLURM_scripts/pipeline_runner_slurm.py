@@ -8,7 +8,6 @@ from functions.train_model import train_model
 from functions.pipeline import pipeline
 
 if __name__ == "__main__":
-    
     # Creating folders for results on habrok
     repo_dir = os.path.dirname(os.path.abspath(__file__))
     job_id = os.environ.get("SLURM_JOB_ID", "nojob")
@@ -34,7 +33,8 @@ if __name__ == "__main__":
         training=True,
         testing=True
     )
-
+    
+    
     # Save results to /dlp/results
     train_df.to_csv(f"{results_dir}/train_messages.csv")
     for N, df in test_dfs.items():
