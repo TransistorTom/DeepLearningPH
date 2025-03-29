@@ -1,0 +1,32 @@
+Traceback (most recent call last):
+  File "/home2/s3306801/github/DeepLearningPH/SLURM_scripts/pipeline_runner_slurm.py", line 28, in <module>
+    model, train_df, test_dfs, history_loss = pipeline(
+  File "/home2/s3306801/github/DeepLearningPH/functions/pipeline.py", line 77, in pipeline
+    out = model(data.x, data.edge_index, save_messages=True)
+  File "/home2/s3306801/envs/DLP/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home2/s3306801/envs/DLP/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home2/s3306801/github/DeepLearningPH/functions/GNN_MLP.py", line 51, in forward
+    return self.propagate(edge_index, size=(x.size(0), x.size(0)), x=x)
+  File "/tmp/functions.GNN_MLP_GNN_MLP_propagate_v6c8kjs4.py", line 241, in propagate
+    out = self.aggregate(
+  File "/home2/s3306801/envs/DLP/lib/python3.10/site-packages/torch_geometric/nn/conv/message_passing.py", line 594, in aggregate
+    return self.aggr_module(inputs, index, ptr=ptr, dim_size=dim_size,
+  File "/home2/s3306801/envs/DLP/lib/python3.10/site-packages/torch_geometric/experimental.py", line 117, in wrapper
+    return func(*args, **kwargs)
+  File "/home2/s3306801/envs/DLP/lib/python3.10/site-packages/torch_geometric/nn/aggr/base.py", line 139, in __call__
+    raise e
+  File "/home2/s3306801/envs/DLP/lib/python3.10/site-packages/torch_geometric/nn/aggr/base.py", line 131, in __call__
+    return super().__call__(x, index=index, ptr=ptr, dim_size=dim_size,
+  File "/home2/s3306801/envs/DLP/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home2/s3306801/envs/DLP/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home2/s3306801/envs/DLP/lib/python3.10/site-packages/torch_geometric/nn/aggr/basic.py", line 22, in forward
+    return self.reduce(x, index, ptr, dim_size, dim, reduce='sum')
+  File "/home2/s3306801/envs/DLP/lib/python3.10/site-packages/torch_geometric/nn/aggr/base.py", line 185, in reduce
+    return scatter(x, index, dim, dim_size, reduce)
+  File "/home2/s3306801/envs/DLP/lib/python3.10/site-packages/torch_geometric/utils/_scatter.py", line 75, in scatter
+    return src.new_zeros(size).scatter_add_(dim, index, src)
+RuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu! (when checking argument for argument index in method wrapper_CUDA_scatter_add_)
