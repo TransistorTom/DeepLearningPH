@@ -1,0 +1,43 @@
+Job started on v100v2gpu13 at Sat Mar 29 20:26:11 CET 2025
+Current working directory: /home2/s3306801/github/DeepLearningPH/SLURM_scripts
+
+###############################################################################
+Hábrók Cluster
+Job 16005309 for user s3306801
+Finished at: Sat Mar 29 20:26:17 CET 2025
+
+Job details:
+============
+
+Job ID                         : 16005309
+Name                           : train_model
+User                           : s3306801
+Partition                      : gpushort
+Nodes                          : v100v2gpu13
+Number of Nodes                : 1
+Cores                          : 4
+Number of Tasks                : 1
+State                          : FAILED  
+Submit                         : 2025-03-29T20:26:09
+Start                          : 2025-03-29T20:26:10
+End                            : 2025-03-29T20:26:13
+Reserved walltime              : 01:00:00
+Used walltime                  : 00:00:03
+Used CPU time                  : 00:00:01 (Efficiency: 11.72%)
+% User (Computation)           : 77.40%
+% System (I/O)                 : 22.60%
+Total memory reserved          : 4G
+Maximum memory used            : 4.00K
+Requested GPUs                 : 1
+Allocated GPUs                 : v100=1
+Max GPU utilization            : 0%
+Max GPU memory used            : 0.00 
+
+Acknowledgements:
+=================
+
+Please see this page for information about acknowledging Hábrók in your publications:
+
+https://wiki.hpc.rug.nl/habrok/introduction/scientific_output
+
+################################################################################

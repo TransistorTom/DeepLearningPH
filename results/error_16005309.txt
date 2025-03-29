@@ -1,0 +1,2 @@
+/var/spool/slurmd/job16005309/slurm_script: line 16: /home2/github/DeepLearningPH/results/env_16005309.txt: No such file or directory
+ls: cannot access '/home2/s3306801/DeepLearningPH/pipeline_runner_slurm.py': No such file or directory
