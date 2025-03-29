@@ -22,15 +22,17 @@ if __name__ == "__main__":
     results_dir = os.path.join(repo_dir, f"results/job{job_id}_{timestamp}")
     os.makedirs(results_dir, exist_ok=True)
 
+    dim = 2
+    N = 3
     # Running full model for training
     model, train_df, test_dfs = pipeline(
-        train_iterations=1000,
+        train_iterations=250,
         test_iterations=20,
-        N_train=3,
+        N_train=N,
         N_test_list=[3, 4, 5],
-        T=1000,
+        T=250,
         dt=0.001,
-        dim=2,
+        dim=dim,
         hidden_channels=128,
         m_dim=2,
         out_channels=2,
@@ -47,4 +49,4 @@ if __name__ == "__main__":
     for N, df in test_dfs.items():
         df.to_csv(f"{results_dir}/test_messages_N{N}.csv")
 
-    torch.save(model.state_dict(), f"{results_dir}/model-{dim}-{job_id}.pt")
+    torch.save(model.state_dict(), f"{results_dir}/model-dim:{dim}-job:{job_id}-N:{N_train}-.pt")
