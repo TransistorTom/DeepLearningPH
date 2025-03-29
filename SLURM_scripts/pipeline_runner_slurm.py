@@ -8,12 +8,15 @@ from functions.train_model import train_model
 from functions.pipeline import pipeline
 
 if __name__ == "__main__":
-    results_dir = "/home2/s3306801/dlp/results"
-    os.makedirs(results_dir, exist_ok=True)
     
+    # Creating folders for results on habrok
+    repo_dir = os.path.dirname(os.path.abspath(__file__))
     job_id = os.environ.get("SLURM_JOB_ID", "nojob")
-    dim = 2
-    
+    timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    results_dir = os.path.join(repo_dir, f"results/job{job_id}_{timestamp}")
+    os.makedirs(results_dir, exist_ok=True)
+
+    # Running full model for training
     model, train_df, test_dfs = pipeline(
         train_iterations=10,
         test_iterations=2,
