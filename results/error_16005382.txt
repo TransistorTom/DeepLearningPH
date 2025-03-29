@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/home2/s3306801/github/DeepLearningPH/SLURM_scripts/pipeline_runner_slurm.py", line 20, in <module>
+    timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+NameError: name 'datetime' is not defined
