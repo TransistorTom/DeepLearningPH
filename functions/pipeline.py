@@ -36,10 +36,11 @@ def pipeline(train_iterations=100, test_iterations=20,
         input_dim = train_graph_data[0].x.shape[1]
         if model is None:
             model = GNN_MLP(n_f=input_dim, m_dim=m_dim, hidden_channels=hidden_channels,
-                        out_channels=out_channels, single_node=False).to(device)
-
+                        out_channels=out_channels, single_node=False)
+        
+        model = model.to(device)
         # 5) Train model
-        model = train_model(model, train_data, epochs=epochs, lr=lr)
+        model, loss_history = train_model(model, train_data, epochs=epochs, lr=lr)
         
         if save:
             torch.save(model.state_dict(), "trained_gnn_model.pt")
@@ -71,10 +72,12 @@ def pipeline(train_iterations=100, test_iterations=20,
                     test_graph_data.extend(graphs)
 
                 model.message_storage = []
+
                 for data in test_graph_data:
                     out = model(data.x, data.edge_index, save_messages=True)
                     loss = criterion(out, data.y)
                     total_loss +=loss.item()
+                    
                 print(len(test_graph_data))    
 
                 avg_loss = total_loss/len(test_graph_data)    
@@ -85,4 +88,4 @@ def pipeline(train_iterations=100, test_iterations=20,
 
                 test_messages_all[N_test] = test_messages
 
-    return model, train_messages, test_messages_all
+    return model, train_messages, test_messages_all, loss_history

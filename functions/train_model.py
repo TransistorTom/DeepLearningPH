@@ -8,7 +8,6 @@ import torch.nn as nn
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-
 class RelativeL1Loss(nn.Module):
     def __init__(self, eps=1e-8):
         super().__init__()
@@ -44,10 +43,9 @@ def train_model(model, train_data, epochs=100, lr=0.01):
     # Only convert to DataLoader if not already in DataLoader format
     if isinstance(train_data, DataLoader):
         train_data = DataLoader(train_data, batch_size=1, shuffle=False)
-
     optimizer = optim.Adam(model.parameters(), lr=lr)
     criterion = RelativeL1Loss()
-    
+
     loss_history = {"Epoch": [], "L1R": []}
 
     for epoch in range(epochs):
