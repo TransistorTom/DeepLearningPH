@@ -1,7 +1,8 @@
 #!/bin/bash
 #SBATCH --job-name=train_model
 #SBATCH --output=/home2/s3306801/github/DeepLearningPH/results/results_%j.txt      
-#SBATCH --error=/home2/s3306801/github/DeepLearningPH/results/error_%j.txt         
+#SBATCH --error=/home2/s3306801/github/DeepLearningPH/results/error_%j.txt
+#SBATCH --chdir=/home2/s3306801/github/DeepLearningPH         
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
 #SBATCH --gres=gpu:1
