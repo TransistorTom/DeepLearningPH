@@ -1,0 +1,30 @@
+/home2/s3306801/github/DeepLearningPH/functions/node_data_list.py:81: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  y_target = torch.tensor(acceleration, dtype=torch.float32)
+Traceback (most recent call last):
+  File "/home2/s3306801/github/DeepLearningPH/SLURM_scripts/pipeline_runner_slurm.py", line 28, in <module>
+    model, train_df, test_dfs, history_loss = pipeline(
+  File "/home2/s3306801/github/DeepLearningPH/functions/pipeline.py", line 77, in pipeline
+    out = model(data.x, data.edge_index, save_messages=True)
+  File "/home2/s3306801/envs/DLP/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home2/s3306801/envs/DLP/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home2/s3306801/github/DeepLearningPH/functions/GNN_MLP.py", line 49, in forward
+    return self.propagate(edge_index, size=(x.size(0), x.size(0)), x=x)
+  File "/tmp/functions.GNN_MLP_GNN_MLP_propagate_h8u9s1u7.py", line 198, in propagate
+    out = self.message(
+  File "/home2/s3306801/github/DeepLearningPH/functions/GNN_MLP.py", line 64, in message
+    messages = self.mess_mlp(edge_features)
+  File "/home2/s3306801/envs/DLP/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home2/s3306801/envs/DLP/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home2/s3306801/envs/DLP/lib/python3.10/site-packages/torch/nn/modules/container.py", line 250, in forward
+    input = module(input)
+  File "/home2/s3306801/envs/DLP/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home2/s3306801/envs/DLP/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home2/s3306801/envs/DLP/lib/python3.10/site-packages/torch/nn/modules/linear.py", line 125, in forward
+    return F.linear(input, self.weight, self.bias)
+RuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu! (when checking argument for argument mat1 in method wrapper_CUDA_addmm)
