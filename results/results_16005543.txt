@@ -1,0 +1,58 @@
+Running on v100v2gpu13
+Python path: /home2/s3306801/envs/DLP/bin/python
+Epoch 001: MSE = 7350.130701
+Epoch 002: MSE = 14132.546999
+Epoch 003: MSE = 4719.772932
+Epoch 004: MSE = 13860.289888
+Epoch 005: MSE = 20748.848201
+Epoch 006: MSE = 35665.977512
+Epoch 007: MSE = 58494.428151
+Epoch 008: MSE = 51100.529368
+Epoch 009: MSE = 57370.543449
+Epoch 010: MSE = 99417.783539
+
+###############################################################################
+Hábrók Cluster
+Job 16005543 for user s3306801
+Finished at: Sat Mar 29 22:16:01 CET 2025
+
+Job details:
+============
+
+Job ID                         : 16005543
+Name                           : train_model
+User                           : s3306801
+Partition                      : gpushort
+Nodes                          : v100v2gpu13
+Number of Nodes                : 1
+Cores                          : 4
+Number of Tasks                : 1
+State                          : FAILED  
+Submit                         : 2025-03-29T21:54:06
+Start                          : 2025-03-29T21:54:07
+End                            : 2025-03-29T22:15:57
+Reserved walltime              : 01:00:00
+Used walltime                  : 00:21:50
+Used CPU time                  : 00:21:15 (Efficiency: 24.33%)
+% User (Computation)           : 99.05%
+% System (I/O)                 :  0.95%
+Total memory reserved          : 4G
+Maximum memory used            : 1.17G
+Requested GPUs                 : 1
+Allocated GPUs                 : v100=1
+Max GPU utilization            : 15%
+Max GPU memory used            : 496.00M
+Hints and tips      :
+ 1) The GPU utilization is low, please check if your code can be optimized,
+    or if you can move your input data to fast local storage.
+ *) For more information on these issues see:
+    https://wiki.hpc.rug.nl/habrok/additional_information/job_hints
+
+Acknowledgements:
+=================
+
+Please see this page for information about acknowledging Hábrók in your publications:
+
+https://wiki.hpc.rug.nl/habrok/introduction/scientific_output
+
+################################################################################

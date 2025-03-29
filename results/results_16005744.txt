@@ -1,0 +1,58 @@
+Running on v100v2gpu13
+Python path: /home2/s3306801/envs/DLP/bin/python
+Epoch 001: MSE = 173.696373
+Epoch 002: MSE = 828.431901
+Epoch 003: MSE = 2230.366452
+Epoch 004: MSE = 6784.868850
+Epoch 005: MSE = 5851.352008
+Epoch 006: MSE = 2902.346366
+Epoch 007: MSE = 6060.123333
+Epoch 008: MSE = 14379.123342
+Epoch 009: MSE = 11737.093562
+Epoch 010: MSE = 31488.313722
+
+###############################################################################
+Hábrók Cluster
+Job 16005744 for user s3306801
+Finished at: Sat Mar 29 22:30:35 CET 2025
+
+Job details:
+============
+
+Job ID                         : 16005744
+Name                           : train_model
+User                           : s3306801
+Partition                      : gpushort
+Nodes                          : v100v2gpu13
+Number of Nodes                : 1
+Cores                          : 4
+Number of Tasks                : 1
+State                          : FAILED  
+Submit                         : 2025-03-29T22:26:38
+Start                          : 2025-03-29T22:26:39
+End                            : 2025-03-29T22:30:31
+Reserved walltime              : 01:00:00
+Used walltime                  : 00:03:52
+Used CPU time                  : 00:03:41 (Efficiency: 23.87%)
+% User (Computation)           : 98.49%
+% System (I/O)                 :  1.51%
+Total memory reserved          : 4G
+Maximum memory used            : 789.07M
+Requested GPUs                 : 1
+Allocated GPUs                 : v100=1
+Max GPU utilization            : 14%
+Max GPU memory used            : 420.00M
+Hints and tips      :
+ 1) The GPU utilization is low, please check if your code can be optimized,
+    or if you can move your input data to fast local storage.
+ *) For more information on these issues see:
+    https://wiki.hpc.rug.nl/habrok/additional_information/job_hints
+
+Acknowledgements:
+=================
+
+Please see this page for information about acknowledging Hábrók in your publications:
+
+https://wiki.hpc.rug.nl/habrok/introduction/scientific_output
+
+################################################################################
