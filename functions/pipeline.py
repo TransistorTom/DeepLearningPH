@@ -5,7 +5,12 @@ from functions.node_data_list import node_data_list
 from functions.GNN_MLP import GNN_MLP
 from functions.train_model import train_model
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+if torch.backends.mps.is_available():
+    device = torch.device("mps")
+elif torch.cuda.is_available():
+    device = torch.device("cuda")
+else:
+    device = torch.device("cpu")
 
 def parity_flip_trajectory(traj):
     flipped_positions = [-p for p in traj["positions"]]
@@ -14,7 +19,7 @@ def parity_flip_trajectory(traj):
     return {"time": traj["time"], "positions": flipped_positions, "velocities": flipped_velocities, "masses": traj["masses"].clone()}
 
 def pipeline(train_iterations=100, test_iterations=20,
-                 N_train=2, N_test_list=[2, 3, 4, 5, 6], T=500, dt=0.01, dim=2, hidden_channels=128,
+                 N_train=2, N_test_list=[2, 3, 4, 5, 6], T=500, dt=0.01, dim=2, hidden_channels=128, batch_size=128,
                  m_dim=2, out_channels=2, epochs=100, lr=0.001, save=False, model=None, training=True, testing=True, G=1.0, single_node=False):
     
     train_messages=None
@@ -40,7 +45,7 @@ def pipeline(train_iterations=100, test_iterations=20,
         
         model = model.to(device)
         # 5) Train model
-        model, loss_history = train_model(model, train_data, epochs=epochs, lr=lr)
+        model, loss_history = train_model(model, train_data, epochs=epochs, batch_size=batch_size, lr=lr)
         
         if save:
             torch.save(model.state_dict(), "trained_gnn_model.pt")

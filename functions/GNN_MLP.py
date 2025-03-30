@@ -6,7 +6,12 @@ from torch_geometric.nn import MessagePassing
 from torch_geometric.data import Data
 from torch_geometric.loader import DataLoader
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+if torch.backends.mps.is_available():
+    device = torch.device("mps")
+elif torch.cuda.is_available():
+    device = torch.device("cuda")
+else:
+    device = torch.device("cpu")
 
 # define the message passing class to initiate MLP's among the nodes
 class GNN_MLP(MessagePassing):
@@ -63,7 +68,6 @@ class GNN_MLP(MessagePassing):
         # Stack the new edge features: [dx, dy, r, m_j]
         edge_features = torch.stack([dx, dy, r, m_j], dim=1)
         edge_features = edge_features.to(device)
-        print(f"x_i device: {x_i.device}, edge_features device: {edge_features.device}")
         messages = self.mess_mlp(edge_features)
 
         if self.store_messages:

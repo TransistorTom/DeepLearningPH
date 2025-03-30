@@ -6,7 +6,12 @@ from torch_geometric.data import Data
 from torch_geometric.loader import DataLoader
 import torch.nn as nn
 
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+if torch.backends.mps.is_available():
+    device = torch.device("mps")
+elif torch.cuda.is_available():
+    device = torch.device("cuda")
+else:
+    device = torch.device("cpu")
 
 class RelativeL1Loss(nn.Module):
     def __init__(self, eps=1e-8):
@@ -17,7 +22,7 @@ class RelativeL1Loss(nn.Module):
         rel_error = torch.abs(pred - target) / (torch.abs(target) + self.eps)
         return rel_error.mean()
 
-def train_model(model, train_data, epochs=100, lr=0.01, batch_size = 32):
+def train_model(model, train_data, epochs=100, lr=0.01, batch_size = 128):
     """
     Train a GNN model using the provided training and validation loaders.
     
@@ -55,7 +60,7 @@ def train_model(model, train_data, epochs=100, lr=0.01, batch_size = 32):
         total_loss = 0
         final_epoch = (epoch == epochs - 1)
         relative_errors = []
-        
+
         for data in train_loader:
             data = data.to(device)
             optimizer.zero_grad()

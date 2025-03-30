@@ -4,7 +4,7 @@
 #SBATCH --error=/home2/s3306801/github/DeepLearningPH/results/error_%j.txt
 #SBATCH --chdir=/home2/s3306801/github/DeepLearningPH         
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=4
+#SBATCH --cpus-per-task=1
 #SBATCH --gres=gpu:1
 #SBATCH --partition=gpushort                                      
 #SBATCH --mem=4G                           
@@ -25,4 +25,4 @@ trap "kill $!" EXIT
 
 export PYTHONPATH=/home2/s3306801/github/DeepLearningPH:$PYTHONPATH
 
-python /home2/s3306801/github/DeepLearningPH/SLURM_scripts/pipeline_runner_slurm.py
+python /home2/s3306801/github/DeepLearningPH/SLURM_scripts/pipeline_slurm.py
