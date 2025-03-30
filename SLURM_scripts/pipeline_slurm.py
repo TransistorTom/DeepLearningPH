@@ -48,7 +48,7 @@ if __name__ == "__main__":
         batch_size=512,
         lr=0.001,
         save_output=True,
-        results_dir=results_dir
+        results_dir=results_dir,
         training=True,
         testing=False
     )
