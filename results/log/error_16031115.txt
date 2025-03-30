@@ -1,0 +1,4 @@
+  File "/home2/s3306801/github/DeepLearningPH/SLURM_scripts/pipeline_slurm.py", line 51
+    results_dir=results_dir
+                ^^^^^^^^^^^
+SyntaxError: invalid syntax. Perhaps you forgot a comma?
