@@ -22,7 +22,7 @@ class RelativeL1Loss(nn.Module):
         rel_error = torch.abs(pred - target) / (torch.abs(target) + self.eps)
         return rel_error.mean()
 
-def train_model(model, train_data, epochs=100, lr=0.01, batch_size = 128):
+def train_model(model, train_data, batch_size, epochs=100, lr=0.01):
     """
     Train a GNN model using the provided training and validation loaders.
     
