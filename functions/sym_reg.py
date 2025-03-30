@@ -44,6 +44,7 @@ def sym_reg(job_id, timestamp, N_test = [3,4,5], train = True, test = True):
             model_selection="score",  # Select best tradeoff between complexity and error
             select_k_features=4, 
             extra_sympy_mappings={"inv_r3": lambda r: 1 / r**3}
+            maxdepth = 5
             )
 
         x_trained = train_model_x.fit(train_X.values, train_y_x.values, variable_names = ['mass_j','mass_i', 'dx', 'r'])
@@ -54,6 +55,7 @@ def sym_reg(job_id, timestamp, N_test = [3,4,5], train = True, test = True):
                 model_selection="score",
                 select_k_features=4,  # small number of features
                 extra_sympy_mappings={"inv_r3": lambda r: 1 / r**3}
+                maxdepth=5
             )
 
         y_trained = train_model_y.fit(train_X.values, train_y_y.values, variable_names = ['mass_j','mass_i', 'dy', 'r'])
