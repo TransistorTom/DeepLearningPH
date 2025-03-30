@@ -33,17 +33,17 @@ if __name__ == "__main__":
     N = 3
     # Running full model for training
     model, train_df, test_dfs, history_loss = pipeline(
-        train_iterations=10,
-        test_iterations=2,
+        train_iterations=100,
+        test_iterations=20,
         N_train=N,
         N_test_list=[3, 4, 5],
-        T=100,
+        T=250,
         dt=0.001,
         dim=dim,
         hidden_channels=128,
         m_dim=2,
         out_channels=2,
-        epochs=10,
+        epochs=40,
         lr=0.001,
         save=False,  # we’ll do the saving in this file manually
         training=True,
