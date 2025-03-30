@@ -4,3 +4,49 @@ Epoch 001: MSE = 0.003251
 Epoch 002: MSE = 0.045001
 Epoch 003: MSE = 0.267586
 Epoch 004: MSE = 0.008947
+
+###############################################################################
+Hábrók Cluster
+Job 16031118 for user s3306801
+Finished at: Sun Mar 30 21:27:25 CEST 2025
+
+Job details:
+============
+
+Job ID                         : 16031118
+Name                           : train_model
+User                           : s3306801
+Partition                      : gpushort
+Nodes                          : v100v2gpu12
+Number of Nodes                : 1
+Cores                          : 8
+Number of Tasks                : 1
+State                          : CANCELLED by user  
+Submit                         : 2025-03-30T21:19:25
+Start                          : 2025-03-30T21:19:26
+End                            : 2025-03-30T21:27:20
+Reserved walltime              : 03:30:00
+Used walltime                  : 00:07:54
+Used CPU time                  : 00:15:50 (Efficiency: 25.06%)
+% User (Computation)           : 95.13%
+% System (I/O)                 :  4.87%
+Total memory reserved          : 16G
+Maximum memory used            : 4.67G
+Requested GPUs                 : 1
+Allocated GPUs                 : v100=1
+Max GPU utilization            : 3%
+Max GPU memory used            : 416.00M
+Hints and tips      :
+ 1) The GPU utilization is low, please check if your code can be optimized,
+    or if you can move your input data to fast local storage.
+ *) For more information on these issues see:
+    https://wiki.hpc.rug.nl/habrok/additional_information/job_hints
+
+Acknowledgements:
+=================
+
+Please see this page for information about acknowledging Hábrók in your publications:
+
+https://wiki.hpc.rug.nl/habrok/introduction/scientific_output
+
+################################################################################
