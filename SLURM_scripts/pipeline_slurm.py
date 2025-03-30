@@ -9,7 +9,7 @@ from functions.node_data_list import node_data_list
 from functions.GNN_MLP import GNN_MLP
 from functions.train_model import train_model
 from functions.pipeline import pipeline
-
+from functions.datasets import GraphDataset
 #repo paths for local habrok files
 try:
     repo_dir = os.path.dirname(os.path.abspath(__file__))

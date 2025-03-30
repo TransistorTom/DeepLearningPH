@@ -1,9 +1,15 @@
 import pandas as pd
 import torch
+import os
+import sys
+
 from functions.n_body_simulation import n_body_simulation, generate_random_positions, generate_random_velocities, generate_unique_masses
 from functions.node_data_list import node_data_list 
 from functions.GNN_MLP import GNN_MLP
-from functions.train_model import train_model
+from functions.train_model import train_model, RelativeL1Loss
+from functions.datasets import GraphDataset
+
+from torch_geometric.loader import DataLoader
 import torch.multiprocessing as mp
 mp.set_start_method('spawn', force=True)
 
@@ -13,6 +19,12 @@ elif torch.cuda.is_available():
     device = torch.device("cuda")
 else:
     device = torch.device("cpu")
+
+tmpdir = os.environ.get("TMPDIR", "/tmp")  # fallback to /tmp if TMPDIR not set
+checkpoint_dir = os.path.join(tmpdir, "checkpoints")
+os.makedirs(checkpoint_dir, exist_ok=True)
+
+criterion = RelativeL1Loss()
 
 def parity_flip_trajectory(traj):
     flipped_positions = [-p for p in traj["positions"]]
@@ -28,35 +40,34 @@ def pipeline(train_iterations=100, test_iterations=20,
     test_messages_all=None
     
     if training:
-        # 1) Run training simulations with N_train
+     
         train_trajectories = [n_body_simulation(N=N_train, T=T, dt=dt, dim=dim, box_size=10, min_dist=2.5, G=1.0) for _ in range(train_iterations)]
     
-        train_graph_data = []
-        for traj in train_trajectories:
+        for i, traj in enumerate(train_trajectories):
             graphs = node_data_list(traj, self_loop=False, complete_graph=True)
-            train_graph_data.extend(graphs)
-        
-        # train_data = [all_train_graph_data[i] for i in train_indices]
-        train_data = [train_graph_data[i] for i in range(len(train_graph_data))]
-
-        # 4) Initialize model
-        input_dim = train_graph_data[0].x.shape[1]
+            path = os.path.join(checkpoint_dir, f"train_graphs_{i}.pt")
+            torch.save(graphs, path)
+    
         if model is None:
-            model = GNN_MLP(n_f=input_dim, m_dim=m_dim, hidden_channels=hidden_channels,
-                        out_channels=out_channels, single_node=False)
-        
+            n_f = graphs[0].x.shape[1]  
+            model = GNN_MLP(n_f=n_f, m_dim=m_dim, hidden_channels=hidden_channels,
+                            out_channels=out_channels, single_node=False)
+    
         model = model.to(device)
-        # 5) Train model
-        model, loss_history = train_model(model, train_data, epochs=epochs, batch_size=batch_size, lr=lr)
         
-        if save:
-            torch.save(model.state_dict(), "trained_gnn_model.pt")
+        train_dataset = GraphDataset(checkpoint_dir)
         
+        model, loss_history = train_model(model, train_dataset, epochs=epochs, batch_size=batch_size, lr=lr)
+        
+        model.eval()
         model.message_storage = []
-        for data in train_graph_data:
-            _ = model(data.x, data.edge_index, save_messages=True)
 
-        # 6) Extract training messages
+        train_loader = DataLoader(train_dataset, batch_size=1, shuffle=False)
+        with torch.no_grad():
+            for data in train_loader:
+                data = data.to(device)
+                _ = model(data.x, data.edge_index, save_messages=True)
+
         train_messages = pd.DataFrame(model.message_storage)
 
     if testing:
@@ -74,25 +85,29 @@ def pipeline(train_iterations=100, test_iterations=20,
                 flipped_trajectories = [parity_flip_trajectory(traj) for traj in test_trajectories]
                 test_trajectories.extend(flipped_trajectories) 
                 test_graph_data = []
-                for traj in test_trajectories:
+                for i, traj in test_trajectories:
                     graphs = node_data_list(traj, self_loop=False, complete_graph=True)
-                    test_graph_data.extend(graphs)
+                    path = os.path.join(checkpoint_dir, f"train_graphs_{i}.pt")
+                    torch.save(graphs, path)
 
-                model.message_storage = []
+                test_dataset = GraphDataset(test_dir)
+                test_loader = DataLoader(test_dataset, batch_size=1, shuffle=False)
+                
                 model = model.to(device)
-                for data in test_graph_data:
-                    out = model(data.x, data.edge_index, save_messages=True)
-                    loss = criterion(out, data.y)
-                    total_loss +=loss.item()
+                model.eval()
+                model.message_storage = []
+                with torch.no_grad():
+                    for data in test_loader:
+                        data = data.to(device)
+                        out = model(data.x, data.edge_index, save_messages=True)
+                        loss = criterion(out, data.y)
+                        total_loss += loss.item()
+                        total_samples += 1
 
-                print(len(test_graph_data))    
-
-                avg_loss = total_loss/len(test_graph_data)    
-
-                print(f"average loss per/over timestep N={N_test}:   {avg_loss}")
+                avg_loss = total_loss / total_samples
+                print(f"average L1R loss per message for N={N_test}: {avg_loss:.6f}")
 
                 test_messages = pd.DataFrame(model.message_storage)
-
                 test_messages_all[N_test] = test_messages
 
     return model, train_messages, test_messages_all, loss_history
