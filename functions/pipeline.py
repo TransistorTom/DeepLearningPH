@@ -114,6 +114,7 @@ def pipeline(train_iterations=100, test_iterations=20,
                 test_messages = pd.DataFrame(model.message_storage)
                 test_messages_all[N_test] = test_messages
 
+    print("Reached end of pipeline. Saving outputs...")
     if save_output and results_dir is not None:
         print(f"[pipeline] Saving final outputs to {results_dir}")
 
