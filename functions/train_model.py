@@ -1,10 +1,11 @@
 import numpy as np
 import torch
-import torch.optim as optim
 import torch_geometric
 from torch_geometric.data import Data
 from torch_geometric.loader import DataLoader
+import torch.optim as optim
 import torch.nn as nn
+from torch.amp import autocast, GradScaler
 import torch.multiprocessing as mp
 mp.set_start_method('spawn', force=True)
 
@@ -53,23 +54,32 @@ def train_model(model, train_data, batch_size, epochs=100, lr=0.01):
     else: 
         train_loader = train_data
     
+    model = model.to(device)
     optimizer = optim.Adam(model.parameters(), lr=lr)
     criterion = RelativeL1Loss()
+
+    use_amp = device.type == 'cuda'
+    scaler = GradScaler(device_type='cuda' if use_amp else 'cpu')
 
     loss_history = {"Epoch": [], "L1R": []}
 
     for epoch in range(epochs):
         total_loss = 0
         final_epoch = (epoch == epochs - 1)
-        relative_errors = []
+        model.train()
 
         for data in train_loader:
             data = data.to(device)
-            optimizer.zero_grad()
-            out = model(data.x, data.edge_index, save_messages=final_epoch) #no longer needed per se, decided to 
-            loss = criterion(out, data.y)
-            loss.backward()
-            optimizer.step()
+            optimizer.zero_grad(set_to_none=True)
+
+            with autocast(device_type='cuda' if use_amp else 'cpu'):
+                out = model(data.x, data.edge_index, save_messages=final_epoch)
+                loss = criterion(out, data.y)
+
+            scaler.scale(loss).backward()
+            scaler.step(optimizer)
+            scaler.update()
+            
             total_loss += loss.item() * (1 / (data.x.shape[0]-1))
 
         loss_e = total_loss / len(train_data) # gives average L1R loss per application of the message function    

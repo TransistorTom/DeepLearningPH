@@ -24,6 +24,10 @@ tmpdir = os.environ.get("TMPDIR", "/tmp")  # fallback to /tmp if TMPDIR not set
 checkpoint_dir = os.path.join(tmpdir, "checkpoints")
 os.makedirs(checkpoint_dir, exist_ok=True)
 
+test_dir = os.path.join(checkpoint_dir, "test")
+os.makedirs(test_dir, exist_ok=True)
+
+test_dataset = GraphDataset(test_dir)
 criterion = RelativeL1Loss()
 
 def parity_flip_trajectory(traj):
@@ -79,7 +83,7 @@ def pipeline(train_iterations=100, test_iterations=20,
     # 7) Run and store test messages for each N in N_test_list
             test_messages_all = {}
             for N_test in N_test_list:
-                criterion = torch.nn.MSELoss()
+                criterion = RelativeL1Loss()
                 total_loss = 0
                 test_trajectories = [n_body_simulation(N=N_test, T=T, dt=dt, dim=dim, box_size=30, min_dist=7) for _ in range(test_iterations)]
                 flipped_trajectories = [parity_flip_trajectory(traj) for traj in test_trajectories]
