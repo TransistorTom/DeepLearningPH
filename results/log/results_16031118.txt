@@ -1,0 +1,6 @@
+Running on v100v2gpu12
+Python path: /home2/s3306801/envs/DLP/bin/python
+Epoch 001: MSE = 0.003251
+Epoch 002: MSE = 0.045001
+Epoch 003: MSE = 0.267586
+Epoch 004: MSE = 0.008947
