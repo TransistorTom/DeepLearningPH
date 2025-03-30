@@ -1,0 +1,94 @@
+Running on v100v2gpu14
+Python path: /home2/s3306801/envs/DLP/bin/python
+Epoch 001: MSE = 0.088250
+Epoch 002: MSE = 0.067466
+Epoch 003: MSE = 0.024731
+Epoch 004: MSE = 0.018975
+Epoch 005: MSE = 0.010647
+Epoch 006: MSE = 0.008744
+Epoch 007: MSE = 0.007393
+Epoch 008: MSE = 0.006864
+Epoch 009: MSE = 0.007866
+Epoch 010: MSE = 0.004182
+Epoch 011: MSE = 0.007502
+Epoch 012: MSE = 0.003020
+Epoch 013: MSE = 0.001634
+Epoch 014: MSE = 0.001261
+Epoch 015: MSE = 0.001436
+Epoch 016: MSE = 0.000860
+Epoch 017: MSE = 0.001416
+Epoch 018: MSE = 0.001357
+Epoch 019: MSE = 0.001089
+Epoch 020: MSE = 0.001462
+Epoch 021: MSE = 0.000606
+Epoch 022: MSE = 0.001218
+Epoch 023: MSE = 0.001721
+Epoch 024: MSE = 0.001289
+Epoch 025: MSE = 0.000856
+Epoch 026: MSE = 0.000893
+Epoch 027: MSE = 0.001194
+Epoch 028: MSE = 0.002375
+Epoch 029: MSE = 0.004729
+Epoch 030: MSE = 0.000930
+Epoch 031: MSE = 0.002294
+Epoch 032: MSE = 0.001094
+Epoch 033: MSE = 0.001644
+Epoch 034: MSE = 0.022064
+Epoch 035: MSE = 0.002067
+Epoch 036: MSE = 0.002888
+Epoch 037: MSE = 0.002074
+Epoch 038: MSE = 0.001102
+Epoch 039: MSE = 0.001179
+Epoch 040: MSE = 0.000914
+9960
+average loss per/over timestep N=3:   0.5907106205362856
+9960
+average loss per/over timestep N=4:   0.6003484393712579
+9960
+average loss per/over timestep N=5:   0.5984924628529228
+
+###############################################################################
+Hábrók Cluster
+Job 16008676 for user s3306801
+Finished at: Sun Mar 30 13:41:42 CEST 2025
+
+Job details:
+============
+
+Job ID                         : 16008676
+Name                           : train_model
+User                           : s3306801
+Partition                      : gpushort
+Nodes                          : v100v2gpu14
+Number of Nodes                : 1
+Cores                          : 1
+Number of Tasks                : 1
+State                          : COMPLETED  
+Submit                         : 2025-03-30T13:37:11
+Start                          : 2025-03-30T13:37:12
+End                            : 2025-03-30T13:41:38
+Reserved walltime              : 01:00:00
+Used walltime                  : 00:04:26
+Used CPU time                  : 00:04:18 (Efficiency: 96.86%)
+% User (Computation)           : 99.12%
+% System (I/O)                 :  0.88%
+Total memory reserved          : 4G
+Maximum memory used            : 921.34M
+Requested GPUs                 : 1
+Allocated GPUs                 : v100=1
+Max GPU utilization            : 13%
+Max GPU memory used            : 456.00M
+Hints and tips      :
+ 1) The GPU utilization is low, please check if your code can be optimized,
+    or if you can move your input data to fast local storage.
+ *) For more information on these issues see:
+    https://wiki.hpc.rug.nl/habrok/additional_information/job_hints
+
+Acknowledgements:
+=================
+
+Please see this page for information about acknowledging Hábrók in your publications:
+
+https://wiki.hpc.rug.nl/habrok/introduction/scientific_output
+
+################################################################################

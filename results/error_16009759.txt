@@ -1,0 +1,1 @@
+slurmstepd: error: *** JOB 16009759 ON v100v2gpu14 CANCELLED AT 2025-03-30T13:48:34 ***

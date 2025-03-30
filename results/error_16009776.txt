@@ -1,0 +1,2 @@
+/var/spool/slurmd/job16009776/slurm_script: line 28: 480502 Killed                  python /home2/s3306801/github/DeepLearningPH/SLURM_scripts/pipeline_slurm.py
+slurmstepd: error: Detected 1 oom_kill event in StepId=16009776.batch. Some of the step tasks have been OOM Killed.
