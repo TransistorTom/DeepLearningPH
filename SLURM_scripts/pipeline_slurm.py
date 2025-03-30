@@ -29,13 +29,15 @@ if __name__ == "__main__":
 
     dim = 2
     Ni = 3
+    training = True
+    testing = False
 
     model, train_df, test_dfs, history_loss = pipeline(
-        train_iterations=25,
+        train_iterations=10,
         test_iterations=20,
         N_train=Ni,
         N_test_list=[3, 4, 5],
-        T=250,
+        T=100,
         dt=0.0001,
         dim=dim,
         hidden_channels=128,
@@ -50,9 +52,15 @@ if __name__ == "__main__":
     )
 
     # saving messages between nodes
-    train_df.to_csv(f"{results_dir}/train_messages.csv")
-    for N, df in test_dfs.items():
-        df.to_csv(f"{results_dir}/test_messages_N{N}.csv")
+    if training:
+        train_df.to_csv(f"{results_dir}/train_messages.csv")
+
+
+    if test_dfs is not None:
+        for N, df in test_dfs.items():
+            df.to_csv(f"{results_dir}/test_messages_N{N}.csv")
+    else:
+        print("No test data returned from pipeline.")
 
     # saving history of loss and model weights
     pd.DataFrame(history_loss).to_csv(f"{results_dir}/history_loss.csv")

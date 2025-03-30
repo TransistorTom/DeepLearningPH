@@ -75,7 +75,6 @@ def pipeline(train_iterations=100, test_iterations=20,
         train_messages = pd.DataFrame(model.message_storage)
 
     if testing:
-
         if model is None:
             print("No model defined, can't test")
 
