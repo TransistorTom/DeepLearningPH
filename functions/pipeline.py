@@ -38,7 +38,7 @@ def parity_flip_trajectory(traj):
 
 def pipeline(train_iterations=100, test_iterations=20,
                  N_train=2, N_test_list=[2, 3, 4, 5, 6], T=500, dt=0.01, dim=2, hidden_channels=128, batch_size=128,
-                 m_dim=2, out_channels=2, epochs=100, lr=0.001, save=False, model=None, training=True, testing=True, G=1.0, single_node=False):
+                 m_dim=2, out_channels=2, epochs=100, lr=0.001, save_output=True, results_dir=None, model=None, training=True, testing=True, G=1.0, single_node=False):
     
     train_messages=None
     test_messages_all=None
@@ -112,5 +112,24 @@ def pipeline(train_iterations=100, test_iterations=20,
 
                 test_messages = pd.DataFrame(model.message_storage)
                 test_messages_all[N_test] = test_messages
+
+    if save_output and results_dir is not None:
+        print(f"[pipeline] Saving final outputs to {results_dir}")
+
+        os.makedirs(results_dir, exist_ok=True)
+
+        torch.save(model.state_dict(), f"{results_dir}/model-dim:{dim}.pt")
+
+        if train_messages is not None:
+            train_messages.to_csv(os.path.join(results_dir, "train_messages.csv"), index=False)
+
+        if test_messages_all is not None:
+            for N, df in test_messages_all.items():
+                df.to_csv(os.path.join(results_dir, f"test_messages_N{N}.csv"), index=False)
+
+        if loss_history is not None:
+            pd.DataFrame(loss_history).to_csv(os.path.join(results_dir, "history_loss.csv"), index=False)
+
+        print("[pipeline] Save complete.")
 
     return model, train_messages, test_messages_all, loss_history

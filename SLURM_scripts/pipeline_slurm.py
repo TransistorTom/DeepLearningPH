@@ -11,6 +11,7 @@ from functions.train_model import train_model
 from functions.pipeline import pipeline
 from functions.datasets import GraphDataset
 #repo paths for local habrok files
+
 try:
     repo_dir = os.path.dirname(os.path.abspath(__file__))
 except NameError:
@@ -33,11 +34,11 @@ if __name__ == "__main__":
     testing = False
 
     model, train_df, test_dfs, history_loss = pipeline(
-        train_iterations=250,
+        train_iterations=2,
         test_iterations=20,
         N_train=Ni,
         N_test_list=[3, 4, 5],
-        T=2500,
+        T=250,
         dt=0.0001,
         dim=dim,
         hidden_channels=128,
@@ -46,22 +47,7 @@ if __name__ == "__main__":
         epochs=10,
         batch_size=512,
         lr=0.001,
-        save=False,
+        save_output=True,
         training=True,
         testing=False
     )
-
-    # saving messages between nodes
-    if training:
-        train_df.to_csv(f"{results_dir}/train_messages.csv")
-
-
-    if test_dfs is not None:
-        for N, df in test_dfs.items():
-            df.to_csv(f"{results_dir}/test_messages_N{N}.csv")
-    else:
-        print("No test data returned from pipeline.")
-
-    # saving history of loss and model weights
-    pd.DataFrame(history_loss).to_csv(f"{results_dir}/history_loss.csv")
-    torch.save(model.state_dict(), f"{results_dir}/model-dim:{dim}-job:{job_id}-N:{Ni}.pt")
