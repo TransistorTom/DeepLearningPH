@@ -42,6 +42,7 @@ if __name__ == "__main__":
         m_dim=2,
         out_channels=2,
         epochs=40,
+        batch_size=128,
         lr=0.001,
         save=False,
         training=True,
