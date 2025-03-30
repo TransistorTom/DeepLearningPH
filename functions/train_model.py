@@ -75,20 +75,20 @@ def train_model(model, train_data, batch_size, epochs=100, lr=0.01):
         total_loss = 0
         final_epoch = (epoch == epochs - 1)
         model.train()
-        with train_loader.enable_cpu_affinity():
-            for data in train_loader:
-                data = data.to(device)
-                optimizer.zero_grad(set_to_none=True)
+        
+        for data in train_loader:
+            data = data.to(device)
+            optimizer.zero_grad(set_to_none=True)
 
-                with autocast(device_type='cuda' if use_amp else 'cpu'):
-                    out = model(data.x, data.edge_index, save_messages=final_epoch)
-                    loss = criterion(out, data.y)
+            with autocast(device_type='cuda' if use_amp else 'cpu'):
+                out = model(data.x, data.edge_index, save_messages=final_epoch)
+                loss = criterion(out, data.y)
 
-                scaler.scale(loss).backward()
-                scaler.step(optimizer)
-                scaler.update()
-                
-                total_loss += loss.item() * (1 / (data.x.shape[0]-1))
+            scaler.scale(loss).backward()
+            scaler.step(optimizer)
+            scaler.update()
+            
+            total_loss += loss.item() * (1 / (data.x.shape[0]-1))
 
         loss_e = total_loss / len(train_data) # gives average L1R loss per application of the message function    
 
