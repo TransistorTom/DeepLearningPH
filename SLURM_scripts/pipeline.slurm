@@ -8,7 +8,7 @@
 #SBATCH --gres=gpu:1
 #SBATCH --partition=gpushort                                      
 #SBATCH --mem=16G                           
-#SBATCH --time=02:30:00                                 
+#SBATCH --time=03:30:00                                 
 #SBATCH --mail-type=END,FAIL              
 #SBATCH --mail-user=j.toot@student.rug.nl 
 

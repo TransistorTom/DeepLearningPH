@@ -54,7 +54,7 @@ def train_model(model, train_data, batch_size, epochs=100, lr=0.01):
             train_data,
             batch_size=batch_size,
             shuffle=False,
-            num_workers=0,
+            num_workers=4,
             pin_memory=(device.type == "cuda")
         )
 
