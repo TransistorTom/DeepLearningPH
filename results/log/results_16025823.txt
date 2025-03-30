@@ -1,0 +1,59 @@
+Running on v100v2gpu12
+Python path: /home2/s3306801/envs/DLP/bin/python
+Epoch 001: MSE = 0.012690
+Epoch 002: MSE = 0.013312
+Epoch 003: MSE = 0.007658
+Epoch 004: MSE = 0.007715
+Epoch 005: MSE = 0.013274
+Epoch 006: MSE = 0.048540
+Epoch 007: MSE = 0.006619
+Epoch 008: MSE = 0.004349
+Epoch 009: MSE = 0.011648
+Epoch 010: MSE = 0.002523
+No test data returned from pipeline.
+
+###############################################################################
+Hábrók Cluster
+Job 16025823 for user s3306801
+Finished at: Sun Mar 30 20:24:24 CEST 2025
+
+Job details:
+============
+
+Job ID                         : 16025823
+Name                           : train_model
+User                           : s3306801
+Partition                      : gpushort
+Nodes                          : v100v2gpu12
+Number of Nodes                : 1
+Cores                          : 8
+Number of Tasks                : 1
+State                          : COMPLETED  
+Submit                         : 2025-03-30T19:24:52
+Start                          : 2025-03-30T19:24:53
+End                            : 2025-03-30T20:24:20
+Reserved walltime              : 03:30:00
+Used walltime                  : 00:59:27
+Used CPU time                  : 02:01:44 (Efficiency: 25.60%)
+% User (Computation)           : 97.30%
+% System (I/O)                 :  2.69%
+Total memory reserved          : 16G
+Maximum memory used            : 13.19G
+Requested GPUs                 : 1
+Allocated GPUs                 : v100=1
+Max GPU utilization            : 10%
+Max GPU memory used            : 418.00M
+Hints and tips      :
+ 1) The GPU utilization is low, please check if your code can be optimized,
+    or if you can move your input data to fast local storage.
+ *) For more information on these issues see:
+    https://wiki.hpc.rug.nl/habrok/additional_information/job_hints
+
+Acknowledgements:
+=================
+
+Please see this page for information about acknowledging Hábrók in your publications:
+
+https://wiki.hpc.rug.nl/habrok/introduction/scientific_output
+
+################################################################################
