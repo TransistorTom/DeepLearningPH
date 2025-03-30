@@ -34,17 +34,17 @@ if __name__ == "__main__":
     testing = False
 
     model, train_df, test_dfs, history_loss = pipeline(
-        train_iterations=2,
+        train_iterations=250,
         test_iterations=20,
         N_train=Ni,
         N_test_list=[3, 4, 5],
-        T=250,
-        dt=0.0001,
+        T=1000,
+        dt=0.0002,
         dim=dim,
         hidden_channels=128,
         m_dim=2,
         out_channels=2,
-        epochs=10,
+        epochs=40,
         batch_size=512,
         lr=0.001,
         save_output=True,
