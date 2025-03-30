@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/home2/s3306801/github/DeepLearningPH/SLURM_scripts/pipeline_slurm.py", line 33, in <module>
+    model, train_df, test_dfs, history_loss = pipeline(
+  File "/home2/s3306801/github/DeepLearningPH/functions/pipeline.py", line 64, in pipeline
+    model, loss_history = train_model(model, train_dataset, epochs=epochs, batch_size=batch_size, lr=lr)
+  File "/home2/s3306801/github/DeepLearningPH/functions/train_model.py", line 78, in train_model
+    with train_loader.enable_cpu_affinity():
+AttributeError: 'DataLoader' object has no attribute 'enable_cpu_affinity'
