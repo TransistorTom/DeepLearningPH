@@ -1,0 +1,53 @@
+Running on v100v2gpu12
+Python path: /home2/s3306801/envs/DLP/bin/python
+Epoch 001: MSE = 0.000004
+Epoch 002: MSE = 0.000004
+Epoch 003: MSE = 0.000004
+Epoch 004: MSE = 0.000004
+Epoch 005: MSE = 0.000004
+Epoch 006: MSE = 0.000001
+Epoch 007: MSE = 0.000002
+Epoch 008: MSE = 0.000002
+Epoch 009: MSE = 0.000002
+Epoch 010: MSE = 0.000001
+
+###############################################################################
+Hábrók Cluster
+Job 16031111 for user s3306801
+Finished at: Sun Mar 30 21:12:11 CEST 2025
+
+Job details:
+============
+
+Job ID                         : 16031111
+Name                           : train_model
+User                           : s3306801
+Partition                      : gpushort
+Nodes                          : v100v2gpu12
+Number of Nodes                : 1
+Cores                          : 8
+Number of Tasks                : 1
+State                          : COMPLETED  
+Submit                         : 2025-03-30T21:11:07
+Start                          : 2025-03-30T21:11:08
+End                            : 2025-03-30T21:12:07
+Reserved walltime              : 03:30:00
+Used walltime                  : 00:00:59
+Used CPU time                  : 00:02:56 (Efficiency: 37.29%)
+% User (Computation)           : 83.67%
+% System (I/O)                 : 16.33%
+Total memory reserved          : 16G
+Maximum memory used            : 2.07G
+Requested GPUs                 : 1
+Allocated GPUs                 : v100=1
+Max GPU utilization            : 2%
+Max GPU memory used            : 414.00M
+
+Acknowledgements:
+=================
+
+Please see this page for information about acknowledging Hábrók in your publications:
+
+https://wiki.hpc.rug.nl/habrok/introduction/scientific_output
+
+################################################################################
