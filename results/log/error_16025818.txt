@@ -1,0 +1,24 @@
+Traceback (most recent call last):
+  File "/home2/s3306801/github/DeepLearningPH/SLURM_scripts/pipeline_slurm.py", line 33, in <module>
+    model, train_df, test_dfs, history_loss = pipeline(
+  File "/home2/s3306801/github/DeepLearningPH/functions/pipeline.py", line 64, in pipeline
+    model, loss_history = train_model(model, train_dataset, epochs=epochs, batch_size=batch_size, lr=lr)
+  File "/home2/s3306801/github/DeepLearningPH/functions/train_model.py", line 79, in train_model
+    for data in train_loader:
+  File "/home2/s3306801/envs/DLP/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 708, in __next__
+    data = self._next_data()
+  File "/home2/s3306801/envs/DLP/lib/python3.10/site-packages/torch/utils/data/dataloader.py", line 766, in _next_data
+    data = _utils.pin_memory.pin_memory(data, self._pin_memory_device)
+  File "/home2/s3306801/envs/DLP/lib/python3.10/site-packages/torch/utils/data/_utils/pin_memory.py", line 106, in pin_memory
+    return data.pin_memory()
+  File "/home2/s3306801/envs/DLP/lib/python3.10/site-packages/torch_geometric/data/data.py", line 385, in pin_memory
+    return self.apply(lambda x: x.pin_memory(), *args)
+  File "/home2/s3306801/envs/DLP/lib/python3.10/site-packages/torch_geometric/data/data.py", line 342, in apply
+    store.apply(func, *args)
+  File "/home2/s3306801/envs/DLP/lib/python3.10/site-packages/torch_geometric/data/storage.py", line 201, in apply
+    self[key] = recursive_apply(value, func)
+  File "/home2/s3306801/envs/DLP/lib/python3.10/site-packages/torch_geometric/data/storage.py", line 897, in recursive_apply
+    return func(data)
+  File "/home2/s3306801/envs/DLP/lib/python3.10/site-packages/torch_geometric/data/data.py", line 385, in <lambda>
+    return self.apply(lambda x: x.pin_memory(), *args)
+RuntimeError: cannot pin 'torch.cuda.FloatTensor' only dense CPU tensors can be pinned
