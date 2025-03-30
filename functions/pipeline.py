@@ -4,6 +4,8 @@ from functions.n_body_simulation import n_body_simulation, generate_random_posit
 from functions.node_data_list import node_data_list 
 from functions.GNN_MLP import GNN_MLP
 from functions.train_model import train_model
+import torch.multiprocessing as mp
+mp.set_start_method('spawn', force=True)
 
 if torch.backends.mps.is_available():
     device = torch.device("mps")

@@ -1,5 +1,7 @@
 import torch
 import random
+import torch.multiprocessing as mp
+mp.set_start_method('spawn', force=True)
 
 def generate_random_positions(N, dim, min_dist, box_size):
     positions = []

@@ -14,7 +14,7 @@ sys.path.append(project_root)
 save_dir=os.path.join(project_root,"results", "symbolic_regression")
 os.makedirs(save_dir, exist_ok=True)
 
-def sym_reg(N_test = [3,4,5], job_id, timestamp, train = True, test = True):
+def sym_reg(job_id, timestamp, N_test = [3,4,5], train = True, test = True):
     
     # paths and roots
     current_file = os.path.abspath(__file__)
@@ -46,7 +46,7 @@ def sym_reg(N_test = [3,4,5], job_id, timestamp, train = True, test = True):
             extra_sympy_mappings={"inv_r3": lambda r: 1 / r**3}
             )
 
-        train_model_x.fit(train_X.values, train_y_x.values, variable_names = ['mass_j','mass_i', 'dx', 'r'])
+        x_trained = train_model_x.fit(train_X.values, train_y_x.values, variable_names = ['mass_j','mass_i', 'dx', 'r'])
 
         train_model_y = PySRRegressor(
                 niterations=100,
@@ -56,7 +56,7 @@ def sym_reg(N_test = [3,4,5], job_id, timestamp, train = True, test = True):
                 extra_sympy_mappings={"inv_r3": lambda r: 1 / r**3}
             )
 
-        train_model_y.fit(train_X.values, train_y_y.values, variable_names = ['mass_j','mass_i', 'dy', 'r'])
+        y_trained = train_model_y.fit(train_X.values, train_y_y.values, variable_names = ['mass_j','mass_i', 'dy', 'r'])
     
     if test:    
     
@@ -65,4 +65,4 @@ def sym_reg(N_test = [3,4,5], job_id, timestamp, train = True, test = True):
         for N in N_test: 
             test_dfs[N] = pd.read_csv(os.path.join(load_path, "test_messages.csv"))
 
-        
+    return x_trained, y_trained

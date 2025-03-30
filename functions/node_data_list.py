@@ -1,5 +1,7 @@
 import torch
 from torch_geometric.data import Data
+import torch.multiprocessing as mp
+mp.set_start_method('spawn', force=True)
 
 if torch.backends.mps.is_available():
     device = torch.device("mps")

@@ -5,6 +5,8 @@ import numpy as np
 from torch_geometric.nn import MessagePassing
 from torch_geometric.data import Data
 from torch_geometric.loader import DataLoader
+import torch.multiprocessing as mp
+mp.set_start_method('spawn', force=True)
 
 if torch.backends.mps.is_available():
     device = torch.device("mps")
