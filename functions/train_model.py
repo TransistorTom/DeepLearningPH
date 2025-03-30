@@ -77,7 +77,7 @@ def train_model(model, train_data, batch_size, epochs=100, lr=0.01):
         model.train()
         
         for data in train_loader:
-            data = data.to(device)
+            data = data.to(device, non_blocking=True)
             optimizer.zero_grad(set_to_none=True)
 
             with autocast(device_type='cuda' if use_amp else 'cpu'):
