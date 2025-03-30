@@ -99,6 +99,7 @@ def pipeline(train_iterations=100, test_iterations=20,
                 model = model.to(device)
                 model.eval()
                 model.message_storage = []
+                total_samples = 0
                 with torch.no_grad():
                     for data in test_loader:
                         data = data.to(device)

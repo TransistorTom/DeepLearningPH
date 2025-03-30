@@ -29,16 +29,16 @@ if __name__ == "__main__":
     os.makedirs(results_dir, exist_ok=True)
 
     dim = 2
-    Ni = 3
+    Ni = 6
     training = True
     testing = False
 
     model, train_df, test_dfs, history_loss = pipeline(
-        train_iterations=250,
+        train_iterations=2,
         test_iterations=20,
         N_train=Ni,
-        N_test_list=[3, 4, 5],
-        T=1000,
+        N_test_list=[4, 6, 8],
+        T=10,
         dt=0.0002,
         dim=dim,
         hidden_channels=128,
