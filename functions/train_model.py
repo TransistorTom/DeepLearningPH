@@ -47,7 +47,7 @@ def train_model(model, train_data, batch_size, epochs=100, lr=0.01):
     
     # Only convert to DataLoader if not already in DataLoader format
     if isinstance(train_data, list):
-        train_loader = DataLoader(train_data, batch_size, shuffle=False)
+        train_loader = DataLoader(train_data, batch_size, shuffle=False, num_workers=8)
     else: 
         train_loader = train_data
     
