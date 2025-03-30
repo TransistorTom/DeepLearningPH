@@ -4,10 +4,10 @@
 #SBATCH --error=/home2/s3306801/github/DeepLearningPH/results/log/error_%j.txt
 #SBATCH --chdir=/home2/s3306801/github/DeepLearningPH         
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=2
+#SBATCH --cpus-per-task=8
 #SBATCH --gres=gpu:1
 #SBATCH --partition=gpushort                                      
-#SBATCH --mem=8G                           
+#SBATCH --mem=16G                           
 #SBATCH --time=02:30:00                                 
 #SBATCH --mail-type=END,FAIL              
 #SBATCH --mail-user=j.toot@student.rug.nl 

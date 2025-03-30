@@ -46,7 +46,7 @@ if __name__ == "__main__":
         lr=0.001,
         save=False,
         training=True,
-        testing=True
+        testing=False
     )
 
     # saving messages between nodes
