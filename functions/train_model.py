@@ -17,7 +17,7 @@ class RelativeL1Loss(nn.Module):
         rel_error = torch.abs(pred - target) / (torch.abs(target) + self.eps)
         return rel_error.mean()
 
-def train_model(model, train_data, epochs=100, lr=0.01):
+def train_model(model, train_data, epochs=100, lr=0.01, batch_size = 32):
     """
     Train a GNN model using the provided training and validation loaders.
     
@@ -41,8 +41,11 @@ def train_model(model, train_data, epochs=100, lr=0.01):
     """
     
     # Only convert to DataLoader if not already in DataLoader format
-    if isinstance(train_data, DataLoader):
-        train_data = DataLoader(train_data, batch_size=1, shuffle=False)
+    if isinstance(train_data, list):
+        train_loader = DataLoader(train_data, batch_size, shuffle=False)
+    else: 
+        train_loader = train_data
+    
     optimizer = optim.Adam(model.parameters(), lr=lr)
     criterion = RelativeL1Loss()
 
@@ -52,7 +55,8 @@ def train_model(model, train_data, epochs=100, lr=0.01):
         total_loss = 0
         final_epoch = (epoch == epochs - 1)
         relative_errors = []
-        for data in train_data:
+        
+        for data in train_loader:
             data = data.to(device)
             optimizer.zero_grad()
             out = model(data.x, data.edge_index, save_messages=final_epoch) #no longer needed per se, decided to 

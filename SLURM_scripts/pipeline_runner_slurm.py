@@ -23,7 +23,7 @@ if __name__ == "__main__":
         repo_dir = os.path.dirname(os.path.abspath(__file__))
     except NameError:
         repo_dir = os.getcwd()
-        
+
     job_id = os.environ.get("SLURM_JOB_ID", "nojob")
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     results_dir = os.path.join(repo_dir, f"results/job{job_id}_{timestamp}")
@@ -33,8 +33,8 @@ if __name__ == "__main__":
     N = 3
     # Running full model for training
     model, train_df, test_dfs, history_loss = pipeline(
-        train_iterations=100,
-        test_iterations=20,
+        train_iterations=10,
+        test_iterations=2,
         N_train=N,
         N_test_list=[3, 4, 5],
         T=100,
