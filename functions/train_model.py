@@ -49,7 +49,7 @@ def train_model(model, train_data, batch_size, epochs=100, lr=0.01):
     """
     
     # Only convert to DataLoader if not already in DataLoader format
-    if not isinstance(train_data, torch.utils.data.DataLoader):
+    if not isinstance(train_data, DataLoader):
         train_loader = DataLoader(
             train_data,
             batch_size=batch_size,
@@ -57,7 +57,7 @@ def train_model(model, train_data, batch_size, epochs=100, lr=0.01):
             num_workers=4,
             pin_memory=(device.type == "cuda")
         )
-        
+
     else:
         train_loader = train_data
 
