@@ -45,7 +45,7 @@ if __name__ == "__main__":
         m_dim=2,
         out_channels=2,
         epochs=40,
-        batch_size=8192,
+        batch_size=4096,
         lr=0.0004,
         save_output=True,
         results_dir=results_dir,
